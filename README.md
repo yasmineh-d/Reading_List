@@ -4,11 +4,11 @@ theme: default
 _class: lead
 paginate: true
 backgroundColor: #ffffff
-color: #5B2C6F
+color: #101292ff
 style: |
   img {
-    max-width: 80%;
-    max-height: 65vh;
+    max-width: 90%;
+    max-height: 75vh;
     display: block;
     margin: 1em auto;
     object-fit: contain;
@@ -35,4 +35,4 @@ style: |
 
 <!-- Contexte -->
 # Contexte
-![Scrum](imgs/2_tup.png)
+![Scrum](imgs/2tup.png)
