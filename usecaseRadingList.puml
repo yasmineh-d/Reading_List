@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+
+actor "Visiteur" as Visiteur
+actor "Admin" as Admin
+
+package "Application Reading List" {
+
+    usecase "Consulter la liste des livres" as UC_Livres
+    usecase "Voir les détails d'un livre" as UC_Details
+
+    usecase "Gérer les livres (CRUD)" as UC_CRUD_Livre
+    usecase "Filtrer les livres par catégorie" as UC_Filtrer
+    usecase "Rechercher des livres par titre" as UC_Rechercher
+}
+
+' Relations Visiteur
+Visiteur -- UC_Livres
+UC_Livres <.. UC_Details : <<extend>>
+
+' Relations Admin
+Admin -- UC_CRUD_Livre
+
+UC_CRUD_Livre <.. UC_Filtrer : <<extend>>
+UC_CRUD_Livre <.. UC_Rechercher : <<extend>>
+
+@enduml
