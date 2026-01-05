@@ -39,19 +39,6 @@ style: |
 
 ---
 
-<!-- Besoins -->
-# Analyse des Besoins
-
-## 1. Besoins Fonctionnels
-*   **Gestion des livres** : Ajouter, modifier, supprimer un livre.
-*   **Organisation** : Classer par statut (_À lire_, _En cours_, _Terminé_).
-*   **Informations** : Saisir titre, auteur, et note personnelle.
-
-## 2. Besoins Techniques
-*   **Interface** : Design épuré et réactif (Responsive).
-*   **Stockage** : Persistance des données.
-
----
 
 <!-- Stack Technique -->
 # Stack Technique
@@ -82,7 +69,7 @@ style: |
 
 </div>
 
-## Analyse Fonctionnelle
+## Fonctionnalité
 
 ![w:600 Use Case Diagram](imgs/book_usecaselastone.png)
 
