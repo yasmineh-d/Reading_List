@@ -36,3 +36,53 @@ style: |
 <!-- Contexte -->
 # Contexte
 ![Scrum](imgs/2tup.png)
+
+---
+
+<!-- Besoins -->
+# Analyse des Besoins
+
+## 1. Besoins Fonctionnels
+*   **Gestion des livres** : Ajouter, modifier, supprimer un livre.
+*   **Organisation** : Classer par statut (_À lire_, _En cours_, _Terminé_).
+*   **Informations** : Saisir titre, auteur, et note personnelle.
+
+## 2. Besoins Techniques
+*   **Interface** : Design épuré et réactif (Responsive).
+*   **Stockage** : Persistance des données.
+
+---
+
+<!-- Stack Technique -->
+# Stack Technique
+
+<div style="display: flex; gap: 30px;">
+
+<div style="width: 45%; background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+
+### les technologies à utiliser
+1.   **Base de données** : MYSQL
+2.   **Architecture N-tier** : Services
+3.   **Framework** : Laravel
+4.   **Architecture** : MVC
+5.   **Moteur de vues** : Blade
+6.   **Ajax** 
+7.   **Upload image**
+8.   **laravel multilangue**
+9.   **vite**
+
+
+
+---
+10.   **Preline UI Library**
+11.   **Lucide Libarary**
+12.   **C99 Tailwind**
+---
+</div>
+
+</div>
+
+## Analyse Fonctionnelle
+
+![w:600 Use Case Diagram](imgs/book_usecaselastone.png)
+
