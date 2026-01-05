@@ -20,7 +20,7 @@ style: |
 
 <!-- Page de garde -->
 # Présentation Projet technique
-### Application de gestion et filtrage des films
+### Application de gestion de liste de lecture
 **Présentée par : Yasmine haddad**  
 **Encadré par : M. Fouad Essarraj**  
 **Date : 05/01/2026**
@@ -32,3 +32,7 @@ style: |
 **Reading List**
 
 ---
+
+<!-- Contexte -->
+# Contexte
+![Scrum](imgs/2_tup.png)
