@@ -1,0 +1,4 @@
+title,author,publication_date,ISBN,image,description,category_id,user_id
+Laravel Basics,John Doe,2022-01-01,9781234567890,,Livre sur Laravel,1,1
+Clean Code,Robert Martin,2019-05-10,9780132350884,,Bonnes pratiques,4,2
+Histoire du Monde,Paul Martin,2018-03-15,9789876543210,,Livre historique,3,3
