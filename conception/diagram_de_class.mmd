@@ -1,24 +1,25 @@
 classDiagram
     %% Classes principales
     class Book {
-        int id
-        string title
-        string author
-        date publicationDate
-        string ISBN
-        int categoryId
-        string description
+        +int id
+        +string title
+        +string author
+        +date publicationDate
+        +string ISBN
+        +string image
+        +int categoryId
+        +string description
     }
 
     class Category {
-        int id
-        string name
+        +int id
+        +string name
     }
 
     class User {
-        int id
-        string username
-        string email
+        +int id
+        +string username
+        +string email
     }
 
     %% Relations
