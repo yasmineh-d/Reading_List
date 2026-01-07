@@ -76,7 +76,8 @@ style: |
 
 </div>
 
-## Fonctionnalité
+<!-- Fonctionnalité -->
+# Fonctionnalité
 
 ![w:600 Use Case Diagram](imgs/book_usecaselastone.png)
 
@@ -87,3 +88,8 @@ style: |
 # Conception
 ![w:600 Use Case Diagram](imgs/diagram_class.png)
 
+---
+<!-- Sujet - Live coding -->
+# Sujet - Live coding
+* Un bouton “Ajouter” qui ouvre une modale pour créer un nouvel élément.
+* Une barre de recherche filtrant des éléments par titre.
