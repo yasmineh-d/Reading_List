@@ -27,6 +27,13 @@ style: |
 
 ---
 
+
+<!-- Waterfall -->
+# Waterfall
+![w:600 Use Case Diagram](imgs/Waterfall.png)
+
+---
+
 <!-- Choix du sujet -->
 # Choix du sujet
 **Reading List**
