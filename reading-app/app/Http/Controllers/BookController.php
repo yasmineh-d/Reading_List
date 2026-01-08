@@ -15,7 +15,7 @@ class BookController extends Controller
 
     public function index()
     {
-        $books = $this->bookService->getAll();
-        return view('books.index', compact('books'));
+        $data = $this->bookService->getAll();
+        return view('books.index', compact('data'));
     }
 }
