@@ -16,7 +16,10 @@ class UserSeeder extends Seeder
 
         foreach ($data as $row) {
             $row = array_combine($header, $row);
-            User::create($row);
+            User::firstOrCreate(
+                ['email' => $row['email']],
+                $row
+            );
         }
     }
 }

@@ -18,19 +18,27 @@ class BookSeeder extends Seeder
         foreach ($data as $row) {
             $row = array_combine($header, $row);
 
-            $category = Category::where('name', $row['categories'])->firstOrFail();
+            // Handle potential multiple categories (e.g., "Informatique - Histoire")
+            $categoryNames = explode(' - ', $row['categories']);
+            $primaryCategoryName = trim($categoryNames[0]);
+
+            $category = Category::firstOrCreate(['name' => $primaryCategoryName]);
             $user = User::where('email', $row['user_email'])->firstOrFail();
 
-            Book::create([
-                'title' => $row['title'],
-                'author' => $row['author'],
-                'publication_date' => $row['publication_date'],
-                'ISBN' => $row['ISBN'],
-                'image' => $row['image'],
-                'description' => $row['description'],
-                'category_id' => $category->id,
-                'user_id' => $user->id,
-            ]);
+            Book::firstOrCreate(
+                [
+                    'title' => $row['title'],
+                    'user_id' => $user->id
+                ],
+                [
+                    'author' => $row['author'],
+                    'publication_date' => $row['publication_date'],
+                    'ISBN' => $row['ISBN'],
+                    'image' => $row['image'],
+                    'description' => $row['description'],
+                    'category_id' => $category->id,
+                ]
+            );
         }
     }
 }
