@@ -7,12 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    
+
     use HasFactory;
 
     protected $fillable = [
         'username',
         'email',
+        'password',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'password' => 'hashed',
     ];
     public function books()
     {

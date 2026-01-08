@@ -1,4 +1,4 @@
-username,email
-yasmine,yasmine@example.com
-salma,salma@example.com
-fadna,fadna@example.com
+username,email,password
+yasmine,yasmine@example.com,123456
+salma,salma@example.com,123456
+fadna,fadna@example.com,123456
