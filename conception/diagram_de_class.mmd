@@ -1,5 +1,4 @@
 classDiagram
-    %% Classes principales
     class Book {
         +int id
         +string title
@@ -7,8 +6,9 @@ classDiagram
         +date publicationDate
         +string ISBN
         +string image
-        +int categoryId
         +string description
+        +int categoryId
+        +int userId
     }
 
     class Category {
@@ -20,9 +20,8 @@ classDiagram
         +int id
         +string username
         +string email
+        +string password
     }
 
-    %% Relations
-    Category "0..*" -- "0..*" Book : has
-    User "1" -- "0..*" Book : "created"
-
+    Category "1" -- "0..*" Book : has
+    User "1" -- "0..*" Book : creates
