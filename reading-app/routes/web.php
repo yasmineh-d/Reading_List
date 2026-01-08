@@ -8,3 +8,7 @@ Route::get('/books', [BookController::class, 'index']);
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/users', [UserController::class, 'index']);
 
+
+Route::get('/', function () {
+    return view('welcome');
+});
