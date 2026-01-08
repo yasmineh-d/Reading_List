@@ -1,6 +1,4 @@
-
 title,author,publication_date,ISBN,image,description,categories,user_email
-Laravel Basics,John Doe,2022-01-01,9781234567890,books/laravel.png,Livre sur Laravel,Informatique,yasmine@example.com
-Clean Code,Robert Martin,2019-05-10,9780132350884,books/cleancode.jpg,Bonnes pratiques,Informatique,salma@example.com
-Histoire du Monde,Paul Martin,2018-03-15,9789876543210,books/histoire.jpg,Livre historique,Histoire,fadna@example.com
-
+Laravel Basics,John Doe,2022-01-01,9781234567890,books/laravel.png,Livre sur Laravel,Informatique - Histoire,yasmine@example.com
+Clean Code,Robert Martin,2019-05-10,9780132350884,books/cleancode.jpg,Bonnes pratiques,Informatique - Science,salma@example.com
+Histoire du Monde,Paul Martin,2018-03-15,9789876543210,books/histoire.jpg,Livre historique,Histoire - Roman,fadna@example.com
