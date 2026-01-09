@@ -25,12 +25,6 @@
                                     <th scope="col"
                                         class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Description
                                     </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Category
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Added By
-                                    </th>
                                     <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">
                                         Action</th>
                                 </tr>
@@ -45,28 +39,15 @@
                                             {{ $book->title }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                             {{ Str::limit($book->description, 50) }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                            <div class="flex flex-wrap gap-1">
-                                                @forelse ($book->categories as $category)
-                                                    <span class="inline-flex items-center gap-x-1.5 py-1 px-2 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
-                                                        {{ $category->name }}
-                                                    </span>
-                                                @empty
-                                                    <span class="text-gray-400">N/A</span>
-                                                @endforelse
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                            {{ $book->user->username ?? 'N/A' }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                            <a href="#"
-                                                class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                                <i data-lucide="edit-2" class="w-4 h-4"></i>
-                                            </a>
-                                            <a href="#"
-                                                class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 disabled:opacity-50 disabled:pointer-events-none dark:text-red-500 dark:hover:text-red-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                            </a>
+                                            <div class="flex justify-end items-center gap-2">
+                                                <a href="#" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500 transition-colors">
+                                                    <i data-lucide="edit-2" class="w-4 h-4"></i>
+                                                </a>
+                                                <a href="#" class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500 transition-colors">
+                                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -75,8 +56,8 @@
                     </div>
 
                     <!-- Pagination -->
-                    <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
-                        {{ $data->links() }}
+                    <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 flex justify-center">
+                        {{ $data->links('vendor.pagination.custom') }}
                     </div>
                     <!-- End Pagination -->
                 </div>

@@ -1,6 +1,6 @@
-username,email,password,role,status
-Ahmed El Mansouri,ahmed.elmansouri@exemple.ma,$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi,Admin,Actif
-Fatima Zahra,fatima.zahra@exemple.ma,$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi,Auteur,Inactif
-Yasmine,yasmine@example.com,$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi,Membre,Actif
-Salma,salma@example.com,$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi,Auteur,Actif
-Fadna,fadna@example.com,$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi,Membre,Actif
+username,email,password
+Ahmed El Mansouri,ahmed.elmansouri@exemple.ma,$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi
+Fatima Zahra,fatima.zahra@exemple.ma,$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi
+Yasmine,yasmine@example.com,$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi
+Salma,salma@example.com,$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi
+Fadna,fadna@example.com,$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi

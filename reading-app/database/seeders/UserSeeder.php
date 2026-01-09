@@ -16,10 +16,11 @@ class UserSeeder extends Seeder
 
         foreach ($data as $row) {
             $row = array_combine($header, $row);
-            User::firstOrCreate(
-                ['email' => $row['email']],
-                $row
-            );
+
+            // Using DB to avoid 'hashed' cast if the password is already hashed in CSV
+            if (!\App\Models\User::where('email', $row['email'])->exists()) {
+                \DB::table('users')->insert($row);
+            }
         }
     }
 }

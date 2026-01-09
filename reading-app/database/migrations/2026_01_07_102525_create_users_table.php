@@ -15,8 +15,6 @@ return new class extends Migration {
             $table->string('username');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('role')->default('Membre');
-            $table->string('status')->default('Actif');
             $table->timestamps();
         });
     }

@@ -30,8 +30,6 @@ class UserController extends Controller
             'username' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'role' => 'required|string',
-            'status' => 'required|string',
         ]);
 
         $this->userService->create($validated);
@@ -49,8 +47,6 @@ class UserController extends Controller
         $validated = $request->validate([
             'username' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
-            'role' => 'required|string',
-            'status' => 'required|string',
         ]);
 
         $this->userService->update($id, $validated);
@@ -61,13 +57,5 @@ class UserController extends Controller
     {
         $this->userService->delete($id);
         return redirect()->route('users.index')->with('success', 'Utilisateur supprimé avec succès.');
-    }
-
-    public function toggleStatus(int $id)
-    {
-        $user = $this->userService->getById($id);
-        $newStatus = $user->status === 'Actif' ? 'Inactif' : 'Actif';
-        $this->userService->update($id, ['status' => $newStatus]);
-        return redirect()->route('users.index')->with('success', 'Statut mis à jour.');
     }
 }
