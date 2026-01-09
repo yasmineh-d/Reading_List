@@ -1,5 +1,4 @@
 import './bootstrap';
 import 'preline';
-import lucide from 'lucide';
-
-window.lucide = lucide;
+import { createIcons, icons } from 'lucide';
+window.lucide = { createIcons, icons };

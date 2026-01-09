@@ -38,6 +38,9 @@
                         <tr>
                             <th scope="col" class="px-6 py-3 text-start text-xs font-bold text-gray-400 uppercase tracking-wider font-heading">Nom Complet</th>
                             <th scope="col" class="px-6 py-3 text-start text-xs font-bold text-gray-400 uppercase tracking-wider font-heading">Email</th>
+                            <th scope="col" class="px-6 py-3 text-start text-xs font-bold text-gray-400 uppercase tracking-wider font-heading">Rôle</th>
+                            <th scope="col" class="px-6 py-3 text-start text-xs font-bold text-gray-400 uppercase tracking-wider font-heading">Statut</th>
+                            <th scope="col" class="px-6 py-3 text-end text-xs font-bold text-gray-400 uppercase tracking-wider font-heading">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -49,15 +52,43 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-500 dark:text-gray-400">{{ $user->email }}</div>
                                 </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500 dark:text-gray-400">
+                                        {{ $loop->index % 2 == 0 ? 'Admin' : 'Auteur' }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($loop->index % 2 == 0)
+                                        <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-500">
+                                            Actif
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400">
+                                            Inactif
+                                        </span>
+                                    @endif
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                    <div class="flex justify-end items-center gap-2">
-                                        <button type="button" onclick="openModal({{ $user->id }}, '{{ $user->username }}', '{{ $user->email }}')" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500 transition-colors">
+                                    <div class="flex justify-end items-center gap-3">
+                                        <button type="button" onclick="openModal({{ $user->id }}, '{{ $user->username }}', '{{ $user->email }}')" class="text-gray-400 hover:text-blue-600 transition-colors">
                                             <i data-lucide="edit-2" class="w-4 h-4"></i>
                                         </button>
+                                        <button type="button" class="text-gray-400 hover:text-gray-600 transition-colors">
+                                            <i data-lucide="badge-check" class="w-4 h-4"></i>
+                                        </button>
+                                        @if($loop->index % 2 == 0)
+                                            <button type="button" class="text-red-500 hover:text-red-600 transition-colors">
+                                                <i data-lucide="user-x" class="w-4 h-4"></i>
+                                            </button>
+                                        @else
+                                            <button type="button" class="text-green-500 hover:text-green-600 transition-colors">
+                                                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                            </button>
+                                        @endif
                                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline" onsubmit="return confirm('Êtes-vous sûr ?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500 transition-colors">
+                                            <button type="submit" class="text-red-500 hover:text-red-600 transition-colors">
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                         </form>
