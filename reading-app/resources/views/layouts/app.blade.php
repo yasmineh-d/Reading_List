@@ -17,7 +17,8 @@
     <div id="application-sidebar"
         class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden fixed top-0 left-0 bottom-0 z-[60] w-64 bg-white border-r border-gray-200 pt-7 pb-10 overflow-y-auto scrollbar-y lg:block lg:translate-x-0 lg:right-auto lg:bottom-0 dark:scrollbar-y dark:bg-slate-900 dark:border-gray-700">
         <div class="px-6">
-            <a class="flex items-center gap-x-2 text-xl font-bold dark:text-white" href="{{ url('/') }}" aria-label="Brand">
+            <a class="flex items-center gap-x-2 text-xl font-bold dark:text-white" href="{{ url('/') }}"
+                aria-label="Brand">
                 <div class="flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-md">
                     <i data-lucide="activity" class="w-5 h-5"></i>
                 </div>
@@ -51,29 +52,8 @@
                         Books
                     </a>
                 </li>
-                <li>
-                    <a class="flex items-center gap-x-3 py-2.5 px-3 rounded-lg text-sm font-medium focus:outline-none {{ request()->is('categories*') ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/50 dark:text-blue-400' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white' }}"
-                        href="{{ url('/categories') }}">
-                        <i data-lucide="layers" class="w-[18px] h-[18px]"></i>
-                        Catégories
-                    </a>
-                </li>
 
-                <!-- Spacer -->
-                <li class="my-4 border-t border-gray-100 dark:border-gray-800"></li>
 
-                <!-- Group 3: Admin -->
-                <li class="mb-2 px-3 text-[10px] uppercase tracking-widest text-gray-400 font-bold font-heading">
-                    Système
-                </li>
-
-                <li>
-                    <a class="flex items-center gap-x-3 py-2.5 px-3 rounded-lg text-sm font-medium focus:outline-none {{ request()->is('users*') ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/50 dark:text-blue-400' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white' }}"
-                        href="{{ url('/users') }}">
-                        <i data-lucide="users" class="w-[18px] h-[18px]"></i>
-                        Utilisateurs
-                    </a>
-                </li>
             </ul>
         </nav>
     </div>
@@ -84,8 +64,7 @@
         class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 lg:pl-64 dark:bg-slate-900 dark:border-gray-700">
         <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6 md:px-8" aria-label="Global">
             <div class="mr-5 lg:mr-0 lg:hidden">
-                <a class="flex items-center gap-x-2 text-xl font-semibold dark:text-white" href="#"
-                    aria-label="Brand">
+                <a class="flex items-center gap-x-2 text-xl font-semibold dark:text-white" href="#" aria-label="Brand">
                     <span class="flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-md">
                         <i data-lucide="activity" class="w-5 h-5"></i>
                     </span>
@@ -95,15 +74,6 @@
 
             <div class="w-full flex items-center justify-end ml-auto sm:justify-between sm:gap-x-3 sm:order-3">
                 <div class="hidden sm:block">
-                    <label for="icon" class="sr-only">Search</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none z-20 pl-4">
-                            <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
-                        </div>
-                        <input type="text" id="icon" name="icon"
-                            class="py-2 pl-11 pr-10 block w-full md:w-80 border-gray-200 rounded-full text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
-                            placeholder="Rechercher...">
-                    </div>
                 </div>
 
                 <div class="flex flex-row items-center justify-end gap-2">
@@ -111,7 +81,8 @@
                         <button id="hs-dropdown-with-header" type="button"
                             class="hs-dropdown-toggle inline-flex justify-center items-center gap-2 w-[2.375rem] h-[2.375rem] rounded-full border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-xs dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-slate-800 dark:focus:ring-slate-700 dark:focus:ring-offset-gray-800">
                             <!-- Placeholder Avatar -->
-                            <div class="w-[2.375rem] h-[2.375rem] rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
+                            <div
+                                class="w-[2.375rem] h-[2.375rem] rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
                                 A
                             </div>
                         </button>
@@ -121,7 +92,7 @@
                                 <p class="text-sm text-gray-500 dark:text-gray-400">Connecté en tant que</p>
                                 <p class="text-sm font-medium text-gray-800 dark:text-gray-300">Admin</p>
                             </div>
-                             <div class="mt-2 py-2 first:pt-0 last:pb-0">
+                            <div class="mt-2 py-2 first:pt-0 last:pb-0">
                                 <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-400"
                                     href="#">
                                     <i data-lucide="log-out" class="w-4 h-4"></i>
@@ -143,9 +114,9 @@
 
     <script>
         window.addEventListener('load', () => {
-             // Re-initialize Preline behaviors if needed or assume app.js handles it.
-             // Preline auto-inits on load usually.
-             if (window.lucide) {
+            // Re-initialize Preline behaviors if needed or assume app.js handles it.
+            // Preline auto-inits on load usually.
+            if (window.lucide) {
                 window.lucide.createIcons();
             }
         });

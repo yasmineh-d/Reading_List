@@ -9,8 +9,7 @@
                 <p class="text-sm text-gray-500 mt-1">Ajouter, modifier, désactiver ou supprimer des comptes.</p>
             </div>
             <button type="button" onclick="openModal()" class="py-2.5 px-4 inline-flex justify-center items-center gap-2 rounded-lg border border-transparent font-medium bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 shadow-sm shadow-blue-500/30">
-                <i data-lucide="plus" class="w-4 h-4"></i>
-                Ajouter un utilisateur
+                <i data-lucide="plus" class="w-4 h-4"></i>+ Ajouter un utilisateur
             </button>
         </div>
 
@@ -30,23 +29,6 @@
                         <input type="text" name="search" value="{{ request('search') }}" class="py-2 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" placeholder="Rechercher par nom...">
                      </form>
                 </div>
-                <!-- Role Filter -->
-                <div>
-                    <select class="py-2 px-3 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                        <option selected>Tous les rôles</option>
-                        <option>Admin</option>
-                        <option>Auteur</option>
-                        <option>Membre</option>
-                    </select>
-                </div>
-                 <!-- Status Filter -->
-                 <div>
-                    <select class="py-2 px-3 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                        <option selected>Tous les statuts</option>
-                        <option>Actif</option>
-                        <option>Inactif</option>
-                    </select>
-                </div>
             </div>
 
             <!-- Table -->
@@ -56,9 +38,6 @@
                         <tr>
                             <th scope="col" class="px-6 py-3 text-start text-xs font-bold text-gray-400 uppercase tracking-wider font-heading">Nom Complet</th>
                             <th scope="col" class="px-6 py-3 text-start text-xs font-bold text-gray-400 uppercase tracking-wider font-heading">Email</th>
-                            <th scope="col" class="px-6 py-3 text-start text-xs font-bold text-gray-400 uppercase tracking-wider font-heading">Rôle</th>
-                            <th scope="col" class="px-6 py-3 text-start text-xs font-bold text-gray-400 uppercase tracking-wider font-heading">Statut</th>
-                            <th scope="col" class="px-6 py-3 text-end text-xs font-bold text-gray-400 uppercase tracking-wider font-heading">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -70,27 +49,11 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-500 dark:text-gray-400">{{ $user->email }}</div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-800 dark:text-gray-200">
-                                        {{ $user->role }}
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="inline-flex items-center gap-1.5 py-0.5 px-2.5 rounded-full text-xs font-medium {{ $user->status === 'Actif' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400' }}">
-                                        {{ $user->status }}
-                                    </span>
-                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                                     <div class="flex justify-end items-center gap-2">
-                                        <button type="button" onclick="openModal({{ $user->id }}, '{{ $user->username }}', '{{ $user->email }}', '{{ $user->role }}', '{{ $user->status }}')" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500 transition-colors">
+                                        <button type="button" onclick="openModal({{ $user->id }}, '{{ $user->username }}', '{{ $user->email }}')" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500 transition-colors">
                                             <i data-lucide="edit-2" class="w-4 h-4"></i>
                                         </button>
-                                        <form action="{{ route('users.toggle-status', $user->id) }}" method="POST" class="inline">
-                                            @csrf
-                                            <button type="submit" class="text-gray-500 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-500 transition-colors">
-                                                <i data-lucide="{{ $user->status === 'Actif' ? 'user-x' : 'check-circle' }}" class="w-4 h-4"></i>
-                                            </button>
-                                        </form>
                                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline" onsubmit="return confirm('Êtes-vous sûr ?')">
                                             @csrf
                                             @method('DELETE')
@@ -140,23 +103,6 @@
                             <label for="password" class="block text-sm font-medium mb-2 dark:text-white">Mot de passe</label>
                             <input type="password" id="password" name="password" class="py-2.5 px-4 block w-full border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label for="role" class="block text-sm font-medium mb-2 dark:text-white">Rôle</label>
-                                <select id="role" name="role" class="py-2.5 px-3 pe-9 block w-full border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                                    <option value="Admin">Admin</option>
-                                    <option value="Auteur">Auteur</option>
-                                    <option value="Membre" selected>Membre</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="status" class="block text-sm font-medium mb-2 dark:text-white">Statut</label>
-                                <select id="status" name="status" class="py-2.5 px-3 pe-9 block w-full border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                                    <option value="Actif" selected>Actif</option>
-                                    <option value="Inactif">Inactif</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-2 rounded-b-xl dark:bg-slate-900/50 dark:border-gray-700">
@@ -173,7 +119,7 @@
     </div>
 
     <script>
-        function openModal(id = null, username = '', email = '', role = 'Membre', status = 'Actif') {
+        function openModal(id = null, username = '', email = '') {
             const modal = document.getElementById('user-modal');
             const form = document.getElementById('user-form');
             const title = document.getElementById('modal-title');
@@ -196,8 +142,6 @@
 
             document.getElementById('username').value = username;
             document.getElementById('email').value = email;
-            document.getElementById('role').value = role;
-            document.getElementById('status').value = status;
 
             modal.classList.remove('hidden');
         }
