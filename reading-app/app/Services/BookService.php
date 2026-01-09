@@ -6,9 +6,19 @@ use App\Models\Book;
 
 class BookService
 {
-    public function getAll()
+    public function getAll(?string $search = null, ?int $category = null)
     {
-        return Book::with(['categories', 'user'])->paginate(10);
+        $query = Book::with(['categories', 'user']);
+
+        if ($search) {
+            $query->where('title', 'like', "%{$search}%");
+        }
+
+        if ($category) {
+            $query->where('category_id', $category);
+        }
+
+        return $query->paginate(10);
     }
 
     public function getById(int $id)
@@ -18,13 +28,29 @@ class BookService
 
     public function create(array $data)
     {
-        return Book::create($data);
+        $categories = $data['categories'] ?? [];
+        unset($data['categories']);
+
+        $book = Book::create($data);
+
+        if (!empty($categories)) {
+            $book->categories()->sync($categories);
+        }
+
+        return $book;
     }
 
     public function update(int $id, array $data)
     {
         $book = Book::findOrFail($id);
+
+        $categories = $data['categories'] ?? [];
+        unset($data['categories']);
+
         $book->update($data);
+
+        $book->categories()->sync($categories);
+
         return $book;
     }
 

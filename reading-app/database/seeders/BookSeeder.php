@@ -11,36 +11,42 @@ class BookSeeder extends Seeder
 {
     public function run(): void
     {
-        $path = database_path('seeders/data/books.csv');
-        $data = array_map('str_getcsv', file($path));
-        $header = array_shift($data);
+        if (($handle = fopen(database_path('seeders/data/books.csv'), 'r')) !== false) {
+            $header = fgetcsv($handle);
 
-        foreach ($data as $row) {
-            $row = array_combine($header, $row);
+            while (($row = fgetcsv($handle)) !== false) {
+                $data = array_combine($header, $row);
 
-            $user = User::where('email', $row['user_email'])->firstOrFail();
+                // Find user
+                $user = User::where('email', $data['user_email'])->first();
+                if (!$user) {
+                    continue;
+                }
 
-            $book = Book::firstOrCreate(
-                [
-                    'title' => $row['title'],
-                    'user_id' => $user->id
-                ],
-                [
-                    'author' => $row['author'],
-                    'publication_date' => $row['publication_date'],
-                    'ISBN' => $row['ISBN'],
-                    'image' => $row['image'],
-                    'description' => $row['description'],
-                    'category_id' => 1, // Fallback for the column that still exists
-                ]
-            );
+                // Create book
+                $book = Book::create([
+                    'title' => $data['title'],
+                    'author' => $data['author'],
+                    'publication_date' => $data['publication_date'],
+                    'ISBN' => $data['ISBN'],
+                    'image' => $data['image'],
+                    'description' => $data['description'],
+                    'user_id' => $user->id,
+                ]);
 
-            // Handle multiple categories
-            $categoryNames = explode(' - ', $row['categories']);
-            foreach ($categoryNames as $name) {
-                $category = Category::firstOrCreate(['name' => trim($name)]);
-                $book->categories()->syncWithoutDetaching([$category->id]);
+                // Attach categories (many-to-many) - Using " - " as delimiter from books.csv
+                $categoryNames = explode(' - ', $data['categories']);
+                $categoryIds = [];
+
+                foreach ($categoryNames as $name) {
+                    $category = Category::firstOrCreate(['name' => trim($name)]);
+                    $categoryIds[] = $category->id;
+                }
+
+                $book->categories()->attach($categoryIds);
             }
+
+            fclose($handle);
         }
     }
 }

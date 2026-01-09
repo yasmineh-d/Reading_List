@@ -114,10 +114,10 @@
 
     <script>
         window.addEventListener('load', () => {
-            // Re-initialize Preline behaviors if needed or assume app.js handles it.
-            // Preline auto-inits on load usually.
-            if (window.lucide) {
-                window.lucide.createIcons();
+            if (window.lucide && window.lucide.createIcons && window.lucide.icons) {
+                window.lucide.createIcons({
+                    icons: window.lucide.icons
+                });
             }
         });
     </script>
