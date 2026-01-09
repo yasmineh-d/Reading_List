@@ -8,7 +8,7 @@ class BookService
 {
     public function getAll()
     {
-        return Book::with(['category', 'user'])->paginate(10);
+        return Book::with(['categories', 'user'])->paginate(10);
     }
 
     public function getById(int $id)

@@ -8,7 +8,14 @@ class UserService
 {
     public function getAll()
     {
-        return User::all();
+        $query = User::query();
+
+        if (request()->has('search')) {
+            $query->where('username', 'like', '%' . request('search') . '%')
+                ->orWhere('email', 'like', '%' . request('search') . '%');
+        }
+
+        return $query->paginate(10);
     }
     public function getById(int $id)
     {

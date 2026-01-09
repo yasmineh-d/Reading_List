@@ -18,14 +18,9 @@ class BookSeeder extends Seeder
         foreach ($data as $row) {
             $row = array_combine($header, $row);
 
-            // Handle potential multiple categories (e.g., "Informatique - Histoire")
-            $categoryNames = explode(' - ', $row['categories']);
-            $primaryCategoryName = trim($categoryNames[0]);
-
-            $category = Category::firstOrCreate(['name' => $primaryCategoryName]);
             $user = User::where('email', $row['user_email'])->firstOrFail();
 
-            Book::firstOrCreate(
+            $book = Book::firstOrCreate(
                 [
                     'title' => $row['title'],
                     'user_id' => $user->id
@@ -36,9 +31,16 @@ class BookSeeder extends Seeder
                     'ISBN' => $row['ISBN'],
                     'image' => $row['image'],
                     'description' => $row['description'],
-                    'category_id' => $category->id,
+                    'category_id' => 1, // Fallback for the column that still exists
                 ]
             );
+
+            // Handle multiple categories
+            $categoryNames = explode(' - ', $row['categories']);
+            foreach ($categoryNames as $name) {
+                $category = Category::firstOrCreate(['name' => trim($name)]);
+                $book->categories()->syncWithoutDetaching([$category->id]);
+            }
         }
     }
 }
