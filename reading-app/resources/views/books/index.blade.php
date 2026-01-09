@@ -45,8 +45,17 @@
                                             {{ $book->title }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                             {{ Str::limit($book->description, 50) }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 dark:text-blue-500">
-                                            {{ $book->category->name ?? 'N/A' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <div class="flex flex-wrap gap-1">
+                                                @forelse ($book->categories as $category)
+                                                    <span class="inline-flex items-center gap-x-1.5 py-1 px-2 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
+                                                        {{ $category->name }}
+                                                    </span>
+                                                @empty
+                                                    <span class="text-gray-400">N/A</span>
+                                                @endforelse
+                                            </div>
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                             {{ $book->user->username ?? 'N/A' }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">

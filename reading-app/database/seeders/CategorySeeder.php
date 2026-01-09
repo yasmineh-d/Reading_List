@@ -10,7 +10,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $path = database_path('seeders/data/categories.csv');
-        $data = array_map('str_getcsv', file($path));
+        $data = array_map('str_getcsv', file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES));
 
         $header = array_shift($data);
 
