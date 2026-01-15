@@ -5,12 +5,12 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use App\Services\CategoryService;
 use App\Models\Category;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\Collection;
 
 class CategoryServiceTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected CategoryService $categoryService;
 
