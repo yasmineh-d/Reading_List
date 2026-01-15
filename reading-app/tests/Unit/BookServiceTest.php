@@ -7,12 +7,12 @@ use App\Services\BookService;
 use App\Models\Book;
 use App\Models\User;
 use App\Models\Category;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class BookServiceTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected BookService $bookService;
 
