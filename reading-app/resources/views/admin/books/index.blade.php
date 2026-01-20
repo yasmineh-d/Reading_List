@@ -27,25 +27,6 @@
                         <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
                     </div>
                 </div>
-                <div>
-                    <select name="category" id="category"
-                        class="w-full py-2 px-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-800 dark:border-gray-700 dark:text-gray-400">
-                        <option value="">All Categories</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="flex items-center gap-2">
-                    @if(request()->has('search') || request()->has('category'))
-                        <a href="{{ route('admin.books.index') }}"
-                            class="px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400 transition-colors">
-                            Reset
-                        </a>
-                    @endif
-                </div>
             </form>
         </div>
 
