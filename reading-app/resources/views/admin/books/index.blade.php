@@ -62,18 +62,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const searchInput = document.getElementById('search');
-            const categorySelect = document.getElementById('category');
             const tableBody = document.querySelector('tbody');
 
             function fetchBooks() {
                 const search = searchInput.value;
-                const category = categorySelect.value;
 
                 const url = new URL(window.location.href);
                 url.searchParams.set('search', search);
-                if (category) url.searchParams.set('category', category);
-                else url.searchParams.delete('category');
-
                 url.searchParams.set('page', 1);
 
                 window.history.pushState({}, '', url);
@@ -90,20 +85,16 @@
                     });
             }
 
-            function debounce(func, timeout = 300) {
+            function debounce(func, delay = 500) {
                 let timer;
                 return (...args) => {
                     clearTimeout(timer);
-                    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+                    timer = setTimeout(() => func.apply(this, args), delay);
                 };
             }
 
-            if (searchInput) {
-                searchInput.addEventListener('input', debounce(fetchBooks, 500));
-            }
-            if (categorySelect) {
-                categorySelect.addEventListener('change', fetchBooks);
-            }
+            searchInput.addEventListener('input', debounce(fetchBooks));
         });
     </script>
+
 @endsection
