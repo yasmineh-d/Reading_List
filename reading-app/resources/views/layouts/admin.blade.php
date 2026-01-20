@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoliCode Blog - Dashboard Admin</title>
+    <title>Reading List - Dashboard Admin</title>
     <!-- Google Fonts: Inter & Outfit -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
@@ -22,7 +22,7 @@
                 <div class="flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-md">
                     <i data-lucide="activity" class="w-5 h-5"></i>
                 </div>
-                <span>Solicode<span class="text-blue-600">App</span></span>
+                <span>Reading<span class="text-blue-600">List</span></span>
             </a>
         </div>
 
@@ -68,7 +68,7 @@
                     <span class="flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-md">
                         <i data-lucide="activity" class="w-5 h-5"></i>
                     </span>
-                    <span>Solicode<span class="text-blue-600">App</span></span>
+                    <span>Reading<span class="text-blue-600">List</span></span>
                 </a>
             </div>
 
@@ -83,7 +83,7 @@
                             <!-- Placeholder Avatar -->
                             <div
                                 class="w-[2.375rem] h-[2.375rem] rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
-                                A
+                                
                             </div>
                         </button>
                         <div class="absolute right-0 top-full mt-2 z-50 transition-[opacity,margin] duration opacity-0 hidden min-w-[15rem] bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700"
