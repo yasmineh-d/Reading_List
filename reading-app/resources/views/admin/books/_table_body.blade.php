@@ -28,32 +28,31 @@
                 @endforeach
             </div>
         </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
+        {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
             {{ $book->publication_date ? \Carbon\Carbon::parse($book->publication_date)->format('M Y') : 'N/A' }}
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <div class="flex items-center justify-end gap-2">
-                <div class="flex items-center justify-end gap-2">
-                    {{-- <a href="{{ route('admin.books.show', $book->id) }}"
-                        class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors dark:text-gray-400 dark:hover:bg-blue-900/30 dark:hover:text-blue-400"
-                        title="View">
-                        <i data-lucide="eye" class="w-4 h-4"></i>
-                    </a>
-                    <a href="{{ route('admin.books.edit', $book->id) }}"
-                        class="p-2 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors dark:text-gray-400 dark:hover:bg-amber-900/30 dark:hover:text-amber-400"
-                        title="Edit">
-                        <i data-lucide="edit-2" class="w-4 h-4"></i>
-                    </a>
-                    <button type="button"
-                        class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors dark:text-gray-400 dark:hover:bg-red-900/30 dark:hover:text-red-400"
-                        title="Delete" data-hs-overlay="#hs-delete-modal-{{ $book->id }}">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button> --}}
-                </div>
+                <a href="{{ route('admin.books.show', $book->id) }}"
+                    class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors dark:text-gray-400 dark:hover:bg-blue-900/30 dark:hover:text-blue-400"
+                    title="View">
+                    <i data-lucide="eye" class="w-4 h-4"></i>
+                </a>
+                <a href="{{ route('admin.books.edit', $book->id) }}"
+                    class="p-2 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors dark:text-gray-400 dark:hover:bg-amber-900/30 dark:hover:text-amber-400"
+                    title="Edit">
+                    <i data-lucide="edit-2" class="w-4 h-4"></i>
+                </a>
+                <button type="button"
+                    class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors dark:text-gray-400 dark:hover:bg-red-900/30 dark:hover:text-red-400"
+                    title="Delete" data-hs-overlay="#hs-delete-modal-{{ $book->id }}">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+            </div>
 
-                {{-- <!-- Include Delete Modal for this item -->
-                @include('admin.books._modal', ['book' => $book]) --}}
-        </td>
+            <!-- Include Delete Modal for this item -->
+            @include('admin.books._modal', ['book' => $book])
+        </td> --}}
     </tr>
 @empty
     <tr>

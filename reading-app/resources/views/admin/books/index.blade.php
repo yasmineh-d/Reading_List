@@ -22,14 +22,15 @@
         <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-slate-900 dark:border-gray-700">
             <form action="{{ route('admin.books.index') }}" method="GET" class="grid gap-4 md:grid-cols-3">
                 <div class="relative">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search title..."
+                    <input type="text" name="search" id="search" value="{{ request('search') }}"
+                        placeholder="Search title..."
                         class="w-full py-2 pl-10 pr-4 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-800 dark:border-gray-700 dark:text-gray-400">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
                     </div>
                 </div>
                 <div>
-                    <select name="category"
+                    <select name="category" id="category"
                         class="w-full py-2 px-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-800 dark:border-gray-700 dark:text-gray-400">
                         <option value="">All Categories</option>
                         @foreach($categories as $category)
@@ -40,10 +41,6 @@
                     </select>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button type="submit"
-                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-slate-800 dark:text-gray-300 dark:hover:bg-slate-700 transition-colors">
-                        Filter
-                    </button>
                     @if(request()->has('search') || request()->has('category'))
                         <a href="{{ route('admin.books.index') }}"
                             class="px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400 transition-colors">
@@ -69,12 +66,12 @@
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
                             Categories</th>
-                        <th scope="col"
+                        {{-- <th scope="col"
                             class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
                             Published</th>
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase dark:text-gray-400">
-                            Actions</th>
+                            Actions</th> --}}
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -91,4 +88,53 @@
         <!-- Create Modal -->
         @include('admin.books._modal')
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search');
+            const categorySelect = document.getElementById('category');
+            const tableBody = document.querySelector('tbody');
+
+            function fetchBooks() {
+                const search = searchInput.value;
+                const category = categorySelect.value;
+
+                const url = new URL(window.location.href);
+                url.searchParams.set('search', search);
+                if (category) url.searchParams.set('category', category);
+                else url.searchParams.delete('category');
+
+                // Reset page to 1 on filter change
+                url.searchParams.set('page', 1);
+
+                window.history.pushState({}, '', url);
+
+                fetch(url, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(response => response.text())
+                    .then(html => {
+                        tableBody.innerHTML = html;
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+            }
+
+            function debounce(func, timeout = 300) {
+                let timer;
+                return (...args) => {
+                    clearTimeout(timer);
+                    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+                };
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', debounce(fetchBooks, 500));
+            }
+            if (categorySelect) {
+                categorySelect.addEventListener('change', fetchBooks);
+            }
+        });
+    </script>
 @endsection
