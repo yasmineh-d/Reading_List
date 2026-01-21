@@ -28,35 +28,24 @@
                 @endforeach
             </div>
         </td>
-        {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-            {{ $book->publication_date ? \Carbon\Carbon::parse($book->publication_date)->format('M Y') : 'N/A' }}
-        </td>
         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <div class="flex items-center justify-end gap-2">
-                <a href="{{ route('admin.books.show', $book->id) }}"
-                    class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors dark:text-gray-400 dark:hover:bg-blue-900/30 dark:hover:text-blue-400"
-                    title="View">
-                    <i data-lucide="eye" class="w-4 h-4"></i>
-                </a>
-                <a href="{{ route('admin.books.edit', $book->id) }}"
+                <button onclick="openEditModal({{ $book->id }})" data-hs-overlay="#hs-add-book-modal"
                     class="p-2 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors dark:text-gray-400 dark:hover:bg-amber-900/30 dark:hover:text-amber-400"
                     title="Edit">
                     <i data-lucide="edit-2" class="w-4 h-4"></i>
-                </a>
-                <button type="button"
+                </button>
+                <button onclick="deleteBook({{ $book->id }})"
                     class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors dark:text-gray-400 dark:hover:bg-red-900/30 dark:hover:text-red-400"
-                    title="Delete" data-hs-overlay="#hs-delete-modal-{{ $book->id }}">
+                    title="Delete">
                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
             </div>
-
-            <!-- Include Delete Modal for this item -->
-            @include('admin.books._modal', ['book' => $book])
-        </td> --}}
+        </td>
     </tr>
 @empty
     <tr>
-        <td colspan="5" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400">
+        <td colspan="4" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400">
             <div class="flex flex-col items-center justify-center">
                 <i data-lucide="book-off" class="w-10 h-10 mb-2 text-gray-300 dark:text-gray-600"></i>
                 <p>No books found matching your criteria.</p>

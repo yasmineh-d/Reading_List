@@ -1,0 +1,42 @@
+Xdebug: [Step Debug] Time-out connecting to debugging client, waited: 200 ms. Tried: 127.0.0.1:9003 (through xdebug.client_host/xdebug.client_port).
+Xdebug: [Step Debug] Time-out connecting to debugging client, waited: 200 ms. Tried: 127.0.0.1:9003 (through xdebug.client_host/xdebug.client_port).
+
+   PASS  Tests\Unit\BookServiceTest
+  Ô£ô it can get all bÔÇª 0.30s  
+  Ô£ô it can filter boÔÇª 0.04s  
+  Ô£ô it can filter boÔÇª 0.07s  
+  Ô£ô it can get bookÔÇª  0.04s  
+  Ô£ô it can create aÔÇª  0.06s  
+  Ô£ô it can update aÔÇª  0.09s  
+  Ô£ô it can delete aÔÇª  0.07s  
+
+   PASS  Tests\Unit\CalculatorTest
+  Ô£ô addition of twoÔÇª  0.05s  
+
+   PASS  Tests\Unit\CategoryServiceTest
+  Ô£ô it can get all cÔÇª 0.05s  
+
+   FAIL  Tests\Feature\ExampleTest
+  Ô¿» the applicationÔÇª  1.15s  
+  ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ  
+   FAILED  Tests\Feature\ExampleTest > the application returns a successful response  MissingAppKeyException   
+  No application encryption key has been specified.
+
+  at vendor\laravel\framework\src\Illuminate\Encryption\EncryptionServiceProvider.php:83
+     79Ôûò     protected function key(array $config)
+     80Ôûò     {
+     81Ôûò         return tap($config['key'], function ($key) {
+     82Ôûò             if (empty($key)) {
+  Ô×£  83Ôûò                 throw new MissingAppKeyException;
+     84Ôûò             }
+     85Ôûò         });
+     86Ôûò     }
+     87Ôûò }
+
+  1   vendor\laravel\framework\src\Illuminate\Encryption\EncryptionServiceProvider.php:83
+  2   vendor\laravel\framework\src\Illuminate\Support\helpers.php:390
+
+
+  Tests:    1 failed, 9 passed (14 assertions)
+  Duration: 2.11s
+

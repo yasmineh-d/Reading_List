@@ -11,4 +11,9 @@ class CategoryService
     {
         return Category::all();
     }
+
+    public function getById(int $id): Category
+    {
+        return Category::with('books')->findOrFail($id);
+    }
 }

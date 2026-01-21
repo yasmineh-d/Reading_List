@@ -65,57 +65,57 @@ class BookController extends Controller
         return redirect()->route('admin.books.index')->with('success', __('book.views.success') ?? 'Book created successfully!');
     }
 
-    // public function show($id)
-    // {
-    //     $book = $this->bookService->getById($id);
+    public function show($id)
+    {
+        $book = $this->bookService->getById($id);
 
-    //     if (request()->ajax()) {
-    //         return response()->json([
-    //             'success' => true,
-    //             'book' => $book
-    //         ]);
-    //     }
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'book' => $book
+            ]);
+        }
 
-    //     return view('admin.books.show', compact('book'));
-    // }
+        return view('admin.books.show', compact('book'));
+    }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $data = $request->validate([
-    //         'title' => 'required|string|max:255',
-    //         'author' => 'required|string|max:255',
-    //         'publication_date' => 'nullable|date',
-    //         'ISBN' => 'nullable|string|max:20',
-    //         'image' => 'nullable|string|max:255',
-    //         'description' => 'nullable|string',
-    //         'categories' => 'nullable|array',
-    //         'categories.*' => 'exists:categories,id',
-    //     ]);
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'publication_date' => 'nullable|date',
+            'ISBN' => 'nullable|string|max:20',
+            'image' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'categories' => 'nullable|array',
+            'categories.*' => 'exists:categories,id',
+        ]);
 
-    //     $this->bookService->update($id, $data);
+        $this->bookService->update($id, $data);
 
-    //     if ($request->ajax()) {
-    //         return response()->json([
-    //             'success' => true,
-    //             'message' => __('book.views.updated_success') ?? 'Book updated successfully!',
-    //         ]);
-    //     }
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => __('book.views.updated_success') ?? 'Book updated successfully!',
+            ]);
+        }
 
-    //     return redirect()->route('admin.books.index')->with('success', __('book.views.updated_success') ?? 'Book updated successfully!');
-    // }
+        return redirect()->route('admin.books.index')->with('success', __('book.views.updated_success') ?? 'Book updated successfully!');
+    }
 
-    // public function destroy($id)
-    // {
-    //     $this->bookService->delete($id);
+    public function destroy($id)
+    {
+        $this->bookService->delete($id);
 
-    //     if (request()->ajax()) {
-    //         return response()->json([
-    //             'success' => true,
-    //             'message' => __('book.views.deleted_success') ?? 'Book deleted successfully!',
-    //             'redirect' => route('admin.books.index')
-    //         ]);
-    //     }
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => __('book.views.deleted_success') ?? 'Book deleted successfully!',
+                'redirect' => route('admin.books.index')
+            ]);
+        }
 
-    //     return redirect()->route('admin.books.index')->with('success', __('book.views.deleted_success') ?? 'Book deleted successfully!');
-    // }
+        return redirect()->route('admin.books.index')->with('success', __('book.views.deleted_success') ?? 'Book deleted successfully!');
+    }
 }
