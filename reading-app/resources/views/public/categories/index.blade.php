@@ -19,9 +19,9 @@
                     <div class="relative z-10">
                         <h3
                             class="text-xl font-bold text-[#1b1b18] dark:text-[#EDEDEC] mb-2 group-hover:text-[#F53003] transition-colors">
-                            {{ $category->label }}</h3>
+                            {{ $category->name }}</h3>
                         <p class="text-sm text-[#706f6c] dark:text-[#A1A09A]">
-                            {{ $category->books_count ?? $category->books()->count() }} books
+                            {{ $category->books_count }} books
                         </p>
                     </div>
 

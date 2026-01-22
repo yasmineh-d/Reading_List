@@ -29,14 +29,7 @@
                             </a>
                         </div>
                         <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-                            <a href="{{ route('books.index') }}"
-                                class="{{ request()->routeIs('books.*') ? 'border-[#F53003] text-[#1b1b18] dark:text-white' : 'border-transparent text-[#706f6c] dark:text-[#A1A09A] hover:text-[#1b1b18] dark:hover:text-white hover:border-[#e3e3e0]' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                                Books
-                            </a>
-                            <a href="{{ route('categories.index') }}"
-                                class="{{ request()->routeIs('categories.*') ? 'border-[#F53003] text-[#1b1b18] dark:text-white' : 'border-transparent text-[#706f6c] dark:text-[#A1A09A] hover:text-[#1b1b18] dark:hover:text-white hover:border-[#e3e3e0]' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                                Categories
-                            </a>
+                            <!-- Navigation simplifiée -->
                         </div>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:items-center">

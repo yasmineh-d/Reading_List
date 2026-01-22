@@ -8,9 +8,9 @@
                     <a href="{{ route('categories.index') }}"
                         class="text-[#706f6c] dark:text-[#A1A09A] hover:text-[#1b1b18] dark:hover:text-[#EDEDEC] text-sm font-medium">Categories</a>
                     <span class="text-[#e3e3e0] dark:text-[#3E3E3A]">/</span>
-                    <span class="text-[#1b1b18] dark:text-[#EDEDEC] text-sm font-medium">{{ $category->label }}</span>
+                    <span class="text-[#1b1b18] dark:text-[#EDEDEC] text-sm font-medium">{{ $category->name }}</span>
                 </div>
-                <h1 class="text-3xl font-bold text-[#1b1b18] dark:text-[#EDEDEC]">{{ $category->label }}</h1>
+                <h1 class="text-3xl font-bold text-[#1b1b18] dark:text-[#EDEDEC]">{{ $category->name }}</h1>
             </div>
 
             <a href="{{ route('books.index', ['category' => $category->id]) }}"
