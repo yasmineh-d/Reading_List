@@ -74,7 +74,7 @@
 
         <!-- Pagination -->
         <div id="pagination-container" class="mt-4">
-            {{ $books->withQueryString()->links() }}
+            @include('components.admin-pagination', ['paginator' => $books])
         </div>
 
         <!-- Modals -->
