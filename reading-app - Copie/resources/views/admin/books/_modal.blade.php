@@ -29,9 +29,9 @@
                     data-hs-overlay="#hs-add-book-modal">
                     Cancel
                 </button>
-                <button type="submit" form="bookForm"
-                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                    Save
+                <button type="button" id="save-book-btn" 
+                    class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none shadow-sm transition-all">
+                    Sauvegarder
                 </button>
             </div>
         </div>

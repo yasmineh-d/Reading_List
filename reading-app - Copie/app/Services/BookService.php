@@ -22,7 +22,7 @@ class BookService
             });
         }
 
-        return $query->paginate(3); // Back to 20 as requested
+        return $query->paginate(20);
     }
 
     public function getById(int $id): Book

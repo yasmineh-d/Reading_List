@@ -25,7 +25,6 @@
                     <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                 @enderror
             </div>
-            </div>
         </div>
         
         <div class="grid gap-6 md:grid-cols-2">

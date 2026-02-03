@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Reading List') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -17,15 +17,19 @@
 </head>
 
 <body
-    class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#EDEDEC] font-sans antialiased h-full flex flex-col">
+    class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 font-sans antialiased h-full flex flex-col">
     <div class="min-h-full">
-        <nav class="bg-white dark:bg-[#161615] border-b border-[#e3e3e0] dark:border-[#3E3E3A]">
+        <nav class="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-700">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <div class="flex">
                         <div class="shrink-0 flex items-center">
-                            <a href="{{ route('home') }}" class="font-bold text-xl text-[#F53003] dark:text-[#FF4433]">
-                                {{ config('app.name', 'Reading List') }}
+                            <a class="flex items-center gap-x-2 text-xl font-bold dark:text-white" href="{{ route('home') }}"
+                                aria-label="Brand">
+                                <div class="flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-md">
+                                    <i data-lucide="activity" class="w-5 h-5"></i>
+                                </div>
+                                <span>Reading<span class="text-blue-600">List</span></span>
                             </a>
                         </div>
                         <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
@@ -34,7 +38,7 @@
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:items-center">
                         <a href="{{ route('admin.books.index') }}"
-                            class="text-[#706f6c] dark:text-[#A1A09A] hover:text-[#1b1b18] dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                             Admin
                         </a>
                     </div>
@@ -48,14 +52,23 @@
             </div>
         </main>
 
-        <footer class="bg-white dark:bg-[#161615] border-t border-[#e3e3e0] dark:border-[#3E3E3A] mt-auto">
+        <footer class="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-gray-700 mt-auto">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <p class="text-center text-sm text-[#706f6c] dark:text-[#A1A09A]">
+                <p class="text-center text-sm text-gray-500 dark:text-gray-400">
                     &copy; {{ date('Y') }} {{ config('app.name', 'Reading List') }}. All rights reserved.
                 </p>
             </div>
         </footer>
     </div>
+    <script>
+        window.addEventListener('load', () => {
+            if (window.lucide && window.lucide.createIcons && window.lucide.icons) {
+                window.lucide.createIcons({
+                    icons: window.lucide.icons
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

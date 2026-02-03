@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\BookService;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class BookController extends Controller
 {
@@ -35,34 +36,50 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'publication_date' => 'nullable|date',
-            'ISBN' => 'nullable|string|max:20',
-            'image' => 'nullable|image|max:2048',
-            'description' => 'nullable|string',
-            'categories' => 'nullable|array',
-            'categories.*' => 'exists:categories,id',
-        ]);
+        Log::info('BookController: store method called', $request->except('image'));
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('books', 'public');
-            $data['image'] = '/storage/' . $path;
-        }
-
-        $data['user_id'] = auth()->id() ?? 1;
-
-        $this->bookService->create($data);
-
-        if ($request->ajax()) {
-            return response()->json([
-                'success' => true,
-                'message' => __('book.views.success') ?? 'Book created successfully!',
+        try {
+            $data = $request->validate([
+                'title' => 'required|string|max:255',
+                'author' => 'required|string|max:255',
+                'publication_date' => 'nullable|date',
+                'ISBN' => 'nullable|string|max:20',
+                'image' => 'nullable|image|max:2048',
+                'description' => 'nullable|string',
+                'categories' => 'nullable|array',
+                'categories.*' => 'exists:categories,id',
             ]);
-        }
 
-        return redirect()->route('admin.books.index')->with('success', __('book.views.success') ?? 'Book created successfully!');
+            if ($request->hasFile('image')) {
+                $path = $request->file('image')->store('books', 'public');
+                $data['image'] = '/storage/' . $path;
+            }
+
+            $data['user_id'] = auth()->id() ?? 1;
+            Log::info('BookController: creating book with data', $data);
+
+            $this->bookService->create($data);
+
+            Log::info('BookController: book created successfully');
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => __('book.views.success') ?? 'Book created successfully!',
+                ]);
+            }
+
+            return redirect()->route('admin.books.index')->with('success', __('book.views.success') ?? 'Book created successfully!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('BookController: Validation Error', ['errors' => $e->errors()]);
+            throw $e;
+        } catch (\Exception $e) {
+            Log::error('BookController: Error creating book', ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            }
+            throw $e;
+        }
     }
 
     public function show($id)

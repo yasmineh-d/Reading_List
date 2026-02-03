@@ -40,7 +40,11 @@
             color: white !important;
         }
     </style>
+
     <div class="space-y-6">
+        <!-- Alert Container -->
+        <div id="alert-container" class="fixed top-4 right-4 z-[9999] w-80"></div>
+
         <!-- Header -->
         <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between mb-6">
             <div>
@@ -49,8 +53,7 @@
             </div>
             <div>
                 <button type="button" onclick="openAddModal()"
-                    class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 transition-all shadow-sm hover:shadow-md"
-                    data-hs-overlay="#hs-add-book-modal">
+                    class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 transition-all shadow-sm hover:shadow-md">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                     Ajouter un produit
                 </button>
@@ -125,231 +128,148 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const searchInput = document.getElementById('search');
-            const categoryFilter = document.getElementById('category-filter');
-            const tableBody = document.getElementById('books-table-body');
-            const paginationContainer = document.getElementById('pagination-container');
-            
-            // X Button Logic for Image Removal
-            const removeImageBtn = document.getElementById('remove-image-btn');
-            if (removeImageBtn) {
-                removeImageBtn.addEventListener('click', function() {
-                    // Hide preview
-                    document.getElementById('current-image-preview').classList.add('hidden');
-                    // Set hidden input to 1
-                    const removeInput = document.getElementById('remove_image_input');
-                    if (removeInput) removeInput.value = '1';
-                    // Clear file input so no file is uploaded if they just want to delete
-                    document.getElementById('image').value = ''; 
-                });
-            }
-
-            function fetchBooks() {
-                const search = searchInput.value;
-                const category = categoryFilter.value;
-
-                const url = new URL(window.location.href);
-                url.searchParams.set('search', search);
-                url.searchParams.set('category', category);
-                url.searchParams.set('page', 1);
-
-                window.history.pushState({}, '', url);
-
-                fetch(url, {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                    .then(response => response.text())
-                    .then(html => {
-                        tableBody.innerHTML = html;
-                        if (window.lucide) window.lucide.createIcons();
-                    });
-            }
-
-            function debounce(func, delay = 300) {
-                let timer;
-                return (...args) => {
-                    clearTimeout(timer);
-                    timer = setTimeout(() => func.apply(this, args), delay);
-                };
-            }
-
-            searchInput.addEventListener('input', debounce(fetchBooks));
-            categoryFilter.addEventListener('change', fetchBooks);
-
-            // Handle pagination
-            document.addEventListener('click', function (e) {
-                if (e.target.closest('.pagination a')) {
-                    e.preventDefault();
-                    const url = e.target.closest('.pagination a').href;
-
-                    fetch(url, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
-                        .then(response => response.text())
-                        .then(html => {
-                            tableBody.innerHTML = html;
-                            if (window.lucide) window.lucide.createIcons();
-                        });
-                }
-            });
-        });
-
-        function openAddModal() {
-            document.getElementById('modal-title').textContent = 'Add New Book';
-            document.getElementById('bookForm').reset();
-            document.getElementById('bookForm').action = '{{ route('admin.books.store') }}';
-            
-            // Remove method field if it exists
-            const methodField = document.getElementById('method-field');
-            if (methodField) {
-                methodField.remove();
-            }
-            
-            // Uncheck all category checkboxes
-            document.querySelectorAll('input[name="categories[]"]').forEach(checkbox => {
-                checkbox.checked = false;
-            });
-
-            // Hide image preview for new books
-            document.getElementById('current-image-preview').classList.add('hidden');
-            const removeInput = document.getElementById('remove_image_input');
-            if (removeInput) removeInput.value = '0';
-        }
-
-        function openEditModal(bookId) {
-            fetch(`/admin/books/${bookId}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('modal-title').textContent = 'Edit Book';
-                    document.getElementById('bookForm').action = `/admin/books/${bookId}`;
-
-                    // Add method field if not exists
-                    if (!document.getElementById('method-field')) {
-                        const methodField = document.createElement('input');
-                        methodField.type = 'hidden';
-                        methodField.name = '_method';
-                        methodField.value = 'PUT';
-                        methodField.id = 'method-field';
-                        document.getElementById('bookForm').appendChild(methodField);
-                    }
-
-                    // Populate form
-                    document.getElementById('title').value = data.book.title;
-                    document.getElementById('author').value = data.book.author;
-                    document.getElementById('ISBN').value = data.book.ISBN || '';
-                    document.getElementById('description').value = data.book.description || '';
-
-                    // Check categories
-                    document.querySelectorAll('input[name="categories[]"]').forEach(checkbox => {
-                        checkbox.checked = data.book.categories.some(cat => cat.id == checkbox.value);
-                    });
-
-                    // Handle Image Preview
-                    const previewContainer = document.getElementById('current-image-preview');
-                    const previewImg = document.getElementById('edit-image-preview');
-                    const removeInput = document.getElementById('remove_image_input');
-                    
-                    if (removeInput) removeInput.value = '0';
-
-                    if (data.book.image) {
-                        previewContainer.classList.remove('hidden');
-                        // Use same logic as table for image path
-                        const isExternal = data.book.image.startsWith('http') || data.book.image.startsWith('/');
-                        previewImg.src = isExternal ? data.book.image : `/storage/${data.book.image}`;
-                    } else {
-                        previewContainer.classList.add('hidden');
-                    }
-
-                    // Open modal
-                    window.HSOverlay.open(document.getElementById('hs-add-book-modal'));
-                });
-        }
-
-        // Handle form submission via AJAX
-        document.getElementById('bookForm')?.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(err => { throw err; });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        window.HSOverlay.close(document.getElementById('hs-add-book-modal'));
-                        showAlert(data.message, 'success');
-                        
-                        // Wait 1.5 seconds before reloading to show the success message
-                        setTimeout(() => {
-                            location.reload();
-                        }, 1500);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    let message = 'An error occurred';
-                    if (error.errors) {
-                        message = Object.values(error.errors).flat().join('\n');
-                    } else if (error.message) {
-                        message = error.message;
-                    }
-                    showAlert(message, 'error');
-                });
-        });
-
-        function showAlert(message, type) {
-            const alertContainer = document.getElementById('alert-container');
-            const alertClass = type === 'success' ? 'bg-green-50 text-green-800 border-green-200' : 'bg-red-50 text-red-800 border-red-200';
-            alertContainer.innerHTML = `
-                    <div class="p-4 border rounded-lg ${alertClass}">
-                        ${message}
+        (function() {
+            // Helper: Show standard toast/alert
+            window.showAlert = function(message, type = 'success') {
+                const container = document.getElementById('alert-container');
+                if (!container) return;
+                
+                const bgColor = type === 'success' ? 'bg-green-600' : 'bg-red-600';
+                container.innerHTML = `
+                    <div class="p-4 ${bgColor} text-white rounded-lg shadow-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${type === 'success' ? 'M5 13l4 4L19 7' : 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'}"></path></svg>
+                        <span>${message}</span>
                     </div>
                 `;
-            setTimeout(() => {
-                alertContainer.innerHTML = '';
-            }, 3000);
-        }
-
-        function deleteBook(bookId) {
-            if (!confirm('Are you sure you want to delete this book?')) return;
-
-            fetch(`/admin/books/${bookId}`, {
-                method: 'DELETE',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json'
+                
+                if (type === 'success') {
+                    setTimeout(() => { container.innerHTML = ''; }, 5000);
                 }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        showAlert(data.message, 'success');
-                        location.reload();
+            };
+
+            // Global Error Handling
+            window.onerror = function(msg, url, line) {
+                console.error('JS Error:', msg, 'at', url, ':', line);
+                return false;
+            };
+
+            // Manual Modal Open
+            window.openAddModal = function() {
+                const form = document.getElementById('bookForm');
+                if (!form) return;
+                
+                form.reset();
+                form.action = "{{ route('admin.books.store') }}";
+                const methodField = document.getElementById('method-field');
+                if (methodField) methodField.remove();
+                
+                document.getElementById('modal-title').textContent = 'Add New Book';
+                document.querySelectorAll('input[name="categories[]"]').forEach(cb => cb.checked = false);
+                document.getElementById('current-image-preview')?.classList.add('hidden');
+                
+                const modal = document.getElementById('hs-add-book-modal');
+                modal.classList.remove('hidden', 'pointer-events-none');
+                modal.classList.add('flex', 'pointer-events-auto');
+                
+                if (window.HSOverlay) {
+                    window.HSOverlay.open(modal);
+                }
+            };
+
+            // Manual Modal Close
+            window.closeBookModal = function() {
+                if (window.HSOverlay && typeof window.HSOverlay.close === 'function') {
+                    window.HSOverlay.close(document.getElementById('hs-add-book-modal'));
+                } else {
+                    const modal = document.getElementById('hs-add-book-modal');
+                    modal.classList.add('hidden', 'pointer-events-none');
+                    modal.classList.remove('flex', 'pointer-events-auto');
+                }
+            }
+
+            // Manual Save Function
+            window.saveBook = function() {
+                const saveBtn = document.getElementById('save-book-btn');
+                const form = document.getElementById('bookForm');
+                
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+
+                const originalText = saveBtn.innerHTML;
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = '<span class="flex items-center gap-2"><svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Saving...</span>';
+
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     }
                 })
-                .catch(error => console.error('Error:', error));
-        }
+                .then(async r => {
+                    const contentType = r.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                        const data = await r.json();
+                        if (!r.ok) throw new Error(data.message || `Error ${r.status}`);
+                        return data;
+                    } else {
+                        throw new Error('Server returned non-JSON response.');
+                    }
+                })
+                .then(data => {
+                    showAlert(data.message || 'Book saved!');
+                    window.closeBookModal();
+                    setTimeout(() => location.reload(), 1000);
+                })
+                .catch(err => {
+                    console.error('Save error:', err);
+                    showAlert(err.message, 'error');
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = originalText;
+                });
+            };
+
+            // Explicit Event Listeners
+            document.addEventListener('DOMContentLoaded', () => {
+                const saveBtn = document.getElementById('save-book-btn');
+                if (saveBtn) {
+                    saveBtn.addEventListener('click', () => window.saveBook());
+                }
+
+                // Search/Filter AJAX
+                const searchInput = document.getElementById('search');
+                const categoryFilter = document.getElementById('category-filter');
+                const tableBody = document.getElementById('books-table-body');
+                
+                function updateTable() {
+                    const url = new URL(location.href);
+                    url.searchParams.set('search', searchInput?.value || '');
+                    url.searchParams.set('category', categoryFilter?.value || '');
+                    url.searchParams.set('page', 1);
+                    
+                    history.pushState({}, '', url);
+
+                    fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                    .then(r => r.text())
+                    .then(html => {
+                        if (tableBody) tableBody.innerHTML = html;
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                }
+
+                searchInput?.addEventListener('input', () => {
+                    clearTimeout(window.searchTimer);
+                    window.searchTimer = setTimeout(updateTable, 300);
+                });
+                categoryFilter?.addEventListener('change', updateTable);
+            });
+        })();
     </script>
 
 @endsection
