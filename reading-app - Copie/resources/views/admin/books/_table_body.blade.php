@@ -11,20 +11,25 @@
             @endif
         </td>
         
-        <!-- Désignation Column (Title + Author) -->
+        <!-- Title Column -->
         <td class="px-6 py-4">
             <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $book->title }}</div>
         </td>
         
-        <!-- Prix Column (mapped to ISBN) -->
+        <!-- Author Column -->
         <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm font-bold text-green-600">{{ $book->ISBN ?? 'N/A' }}</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">{{ $book->author }}</div>
+        </td>
+        
+        <!-- ISBN Column -->
+        <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900 dark:text-white">{{ $book->ISBN ?? 'N/A' }}</div>
         </td>
         
         <!-- Catégorie Column -->
         <td class="px-6 py-4 whitespace-nowrap">
             <div class="flex flex-wrap gap-1">
-                @foreach($book->categories->take(2) as $bg_cat)
+                @foreach($book->categories as $bg_cat)
                     <span
                         class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300">
                         {{ $bg_cat->name }}
@@ -58,7 +63,7 @@
     </tr>
 @empty
     <tr>
-        <td colspan="6" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400">
+        <td colspan="7" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400">
             <div class="flex flex-col items-center justify-center">
                 <i data-lucide="book-off" class="w-10 h-10 mb-2 text-gray-300 dark:text-gray-600"></i>
                 <p>Aucun livre trouvé.</p>

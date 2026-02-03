@@ -51,13 +51,17 @@
                             IMAGE</th>
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
-                            DÉSIGNATION</th>
+                            TITLE</th>
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
-                            PRIX</th>
+                            AUTHOR</th>
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
-                            CATÉGORIE</th>
+                            ISBN</th>
+                        
+                        <th scope="col"
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
+                            CATEGORIES</th>
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
                             DESCRIPTION</th>
@@ -151,7 +155,17 @@
             document.getElementById('modal-title').textContent = 'Add New Book';
             document.getElementById('bookForm').reset();
             document.getElementById('bookForm').action = '{{ route('admin.books.store') }}';
-            document.getElementById('method-field').remove();
+            
+            // Remove method field if it exists
+            const methodField = document.getElementById('method-field');
+            if (methodField) {
+                methodField.remove();
+            }
+            
+            // Uncheck all category checkboxes
+            document.querySelectorAll('input[name="categories[]"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
         }
 
         function openEditModal(bookId) {
@@ -179,6 +193,7 @@
                     // Populate form
                     document.getElementById('title').value = data.book.title;
                     document.getElementById('author').value = data.book.author;
+                    document.getElementById('description').value = data.book.description || '';
 
                     // Check categories
                     document.querySelectorAll('input[name="categories[]"]').forEach(checkbox => {

@@ -70,6 +70,9 @@ class BookController extends Controller
         $book = $this->bookService->getById($id);
 
         if (request()->ajax()) {
+            // Make sure categories are loaded
+            $book->load('categories');
+            
             return response()->json([
                 'success' => true,
                 'book' => $book
