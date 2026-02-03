@@ -9,7 +9,8 @@ class BookService
 {
     public function getAll(?string $search = null, ?int $category = null): LengthAwarePaginator
     {
-        $query = Book::with(['categories', 'user']);
+        $query = Book::with(['categories', 'user'])
+            ->orderBy('created_at', 'desc'); // Newest books first
 
         if ($search) {
             $query->where('title', 'like', "%{$search}%");
@@ -21,7 +22,7 @@ class BookService
             });
         }
 
-        return $query->paginate(10);
+        return $query->paginate(20); // Increased from 10 to 20
     }
 
     public function getById(int $id): Book

@@ -25,7 +25,21 @@
                     <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                 @enderror
             </div>
+            </div>
         </div>
+        
+        <div class="grid gap-6 md:grid-cols-2">
+            <div>
+                <label for="ISBN" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">ISBN</label>
+                <input type="text" name="ISBN" id="ISBN" value="{{ old('ISBN', $book->ISBN ?? '') }}"
+                    class="w-full px-4 py-2 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-800 dark:border-gray-700 dark:text-gray-400"
+                    placeholder="Enter ISBN number...">
+                @error('ISBN')
+                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+        
         <div>
             <label for="description" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
             <textarea name="description" id="description" rows="3"

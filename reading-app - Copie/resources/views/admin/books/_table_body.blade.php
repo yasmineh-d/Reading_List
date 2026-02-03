@@ -40,7 +40,7 @@
         
         <!-- Description Column -->
         <td class="px-6 py-4">
-            <div class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+            <div class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 max-h-11 overflow-hidden">
                 {{ Str::limit($book->description ?? 'Découvrez ' . $book->title . ', un smartphone phare...', 80) }}
             </div>
         </td>

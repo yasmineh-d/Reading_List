@@ -193,6 +193,7 @@
                     // Populate form
                     document.getElementById('title').value = data.book.title;
                     document.getElementById('author').value = data.book.author;
+                    document.getElementById('ISBN').value = data.book.ISBN || '';
                     document.getElementById('description').value = data.book.description || '';
 
                     // Check categories
@@ -223,8 +224,11 @@
                     if (data.success) {
                         window.HSOverlay.close(document.getElementById('hs-add-book-modal'));
                         showAlert(data.message, 'success');
-                        // Reload table
-                        location.reload();
+                        
+                        // Wait 1.5 seconds before reloading to show the success message
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
                     }
                 })
                 .catch(error => {
