@@ -3,7 +3,10 @@
         <!-- Image Column -->
         <td class="px-6 py-4 whitespace-nowrap">
             @if($book->image)
-                <img class="w-12 h-12 object-cover rounded" src="{{ $book->image }}" alt="{{ $book->title }}">
+                <img class="w-12 h-12 object-cover rounded" 
+                     src="{{ Str::startsWith($book->image, ['http', 'https', '/']) ? $book->image : asset('storage/' . $book->image) }}" 
+                     alt="{{ $book->title }}"
+                     onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'flex items-center justify-center w-12 h-12 bg-gray-100 rounded text-gray-400 dark:bg-slate-800\'><i data-lucide=\'image\' class=\'w-5 h-5\'></i></div>'; lucide.createIcons();">
             @else
                 <div class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded text-gray-400 dark:bg-slate-800">
                     <i data-lucide="image" class="w-5 h-5"></i>

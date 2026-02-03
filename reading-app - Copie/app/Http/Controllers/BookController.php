@@ -89,22 +89,35 @@ class BookController extends Controller
             'author' => 'required|string|max:255',
             'publication_date' => 'nullable|date',
             'ISBN' => 'nullable|string|max:20',
-            'image' => 'nullable|string|max:255',
+            'image' => 'nullable|image|max:2048',
             'description' => 'nullable|string',
             'categories' => 'nullable|array',
             'categories.*' => 'exists:categories,id',
+            'remove_image' => 'nullable|boolean',
         ]);
+
+        $book = $this->bookService->getById($id);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('books', 'public');
+            $data['image'] = '/storage/' . $path;
+        } elseif ($request->boolean('remove_image')) {
+            $data['image'] = null;
+        } else {
+            // Keep existing image if no new one and not removing
+            unset($data['image']);
+        }
 
         $this->bookService->update($id, $data);
 
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => __('book.views.updated_success') ?? 'Book updated successfully!',
+                'message' => 'Book updated successfully!',
             ]);
         }
 
-        return redirect()->route('admin.books.index')->with('success', __('book.views.updated_success') ?? 'Book updated successfully!');
+        return redirect()->route('admin.books.index')->with('success', 'Book updated successfully!');
     }
 
     public function destroy($id)

@@ -1,6 +1,45 @@
 @extends('layouts.admin')
 
 @section('content')
+    <style>
+        /* Pagination Styling to match ECO Shop */
+        #pagination-container nav div:last-child span.relative,
+        #pagination-container nav div:last-child a.relative {
+            border-radius: 6px !important;
+            margin-left: 4px !important;
+            border: 1px solid #e5e7eb !important;
+            background-color: #ffffff !important;
+            color: #374151 !important;
+            padding: 6px 12px !important;
+            font-size: 0.8125rem !important;
+            font-weight: 500 !important;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        #pagination-container nav div:last-child span.relative[aria-current="page"] {
+            background-color: #1f2937 !important;
+            color: white !important;
+            border-color: #1f2937 !important;
+        }
+
+        #pagination-container nav div:last-child a.relative:hover {
+            background-color: #f9fafb !important;
+            border-color: #d1d5db !important;
+        }
+        
+        .dark #pagination-container nav div:last-child span.relative,
+        .dark #pagination-container nav div:last-child a.relative {
+            background-color: #1e293b !important;
+            border-color: #334155 !important;
+            color: #94a3b8 !important;
+        }
+        
+        .dark #pagination-container nav div:last-child span.relative[aria-current="page"] {
+            background-color: #3b82f6 !important;
+            color: white !important;
+        }
+    </style>
     <div class="space-y-6">
         <!-- Header -->
         <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between mb-6">
@@ -77,13 +116,8 @@
         </div>
 
         <!-- Pagination Footer -->
-        <div class="flex items-center justify-between mt-6 px-2">
-            <div class="text-sm text-gray-600 dark:text-gray-400">
-                Showing {{ $books->firstItem() ?? 0 }} to {{ $books->lastItem() ?? 0 }} of {{ $books->total() }} results
-            </div>
-            <div id="pagination-container">
-                {{ $books->withQueryString()->links() }}
-            </div>
+        <div id="pagination-container" class="mt-6 px-2">
+            {{ $books->withQueryString()->links() }}
         </div>
 
         <!-- Modals -->
@@ -96,6 +130,20 @@
             const categoryFilter = document.getElementById('category-filter');
             const tableBody = document.getElementById('books-table-body');
             const paginationContainer = document.getElementById('pagination-container');
+            
+            // X Button Logic for Image Removal
+            const removeImageBtn = document.getElementById('remove-image-btn');
+            if (removeImageBtn) {
+                removeImageBtn.addEventListener('click', function() {
+                    // Hide preview
+                    document.getElementById('current-image-preview').classList.add('hidden');
+                    // Set hidden input to 1
+                    const removeInput = document.getElementById('remove_image_input');
+                    if (removeInput) removeInput.value = '1';
+                    // Clear file input so no file is uploaded if they just want to delete
+                    document.getElementById('image').value = ''; 
+                });
+            }
 
             function fetchBooks() {
                 const search = searchInput.value;
@@ -166,6 +214,11 @@
             document.querySelectorAll('input[name="categories[]"]').forEach(checkbox => {
                 checkbox.checked = false;
             });
+
+            // Hide image preview for new books
+            document.getElementById('current-image-preview').classList.add('hidden');
+            const removeInput = document.getElementById('remove_image_input');
+            if (removeInput) removeInput.value = '0';
         }
 
         function openEditModal(bookId) {
@@ -201,6 +254,22 @@
                         checkbox.checked = data.book.categories.some(cat => cat.id == checkbox.value);
                     });
 
+                    // Handle Image Preview
+                    const previewContainer = document.getElementById('current-image-preview');
+                    const previewImg = document.getElementById('edit-image-preview');
+                    const removeInput = document.getElementById('remove_image_input');
+                    
+                    if (removeInput) removeInput.value = '0';
+
+                    if (data.book.image) {
+                        previewContainer.classList.remove('hidden');
+                        // Use same logic as table for image path
+                        const isExternal = data.book.image.startsWith('http') || data.book.image.startsWith('/');
+                        previewImg.src = isExternal ? data.book.image : `/storage/${data.book.image}`;
+                    } else {
+                        previewContainer.classList.add('hidden');
+                    }
+
                     // Open modal
                     window.HSOverlay.open(document.getElementById('hs-add-book-modal'));
                 });
@@ -219,7 +288,12 @@
                     'Accept': 'application/json'
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw err; });
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     if (data.success) {
                         window.HSOverlay.close(document.getElementById('hs-add-book-modal'));
@@ -233,7 +307,13 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    showAlert('An error occurred', 'error');
+                    let message = 'An error occurred';
+                    if (error.errors) {
+                        message = Object.values(error.errors).flat().join('\n');
+                    } else if (error.message) {
+                        message = error.message;
+                    }
+                    showAlert(message, 'error');
                 });
         });
 

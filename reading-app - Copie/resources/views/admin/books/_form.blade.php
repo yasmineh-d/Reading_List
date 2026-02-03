@@ -51,16 +51,28 @@
         </div>
 
         <div>
-            <label for="image" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Cover Image
-                URL</label>
+            <label for="image" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Cover Image</label>
             <input type="file" name="image" id="image"
                 class="w-full px-4 py-2 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-800 dark:border-gray-700 dark:text-gray-400">
-            @if(isset($book) && $book->image)
-                <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                    Current image:
-                    <img src="{{ $book->image }}" alt="Preview" class="h-20 mt-1 rounded shadow-sm">
+            
+            <!-- Dynamic Image Preview Container for Edit Modal -->
+            <div id="current-image-preview" class="mt-3 hidden">
+                <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Image actuelle :</p>
+                <div class="relative inline-block group">
+                    <img id="edit-image-preview" src="" alt="Preview" class="h-32 w-24 object-cover rounded shadow-md border dark:border-gray-600">
+                    
+                    <!-- X Button to remove image -->
+                    <button type="button" id="remove-image-btn" 
+                        class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow-md hover:bg-red-600 transition-colors focus:outline-none"
+                        title="Delete Image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    </button>
+                    
+                    <!-- Hidden input to track removal -->
+                    <input type="hidden" name="remove_image" id="remove_image_input" value="0">
                 </div>
-            @endif
+            </div>
+
             @error('image')
                 <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
             @enderror
