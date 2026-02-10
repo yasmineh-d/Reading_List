@@ -27,6 +27,18 @@ style: |
 
 
 ---
+# Plan
+
+1.  **Méthode Waterfall**
+2.  **Exigences :** Travail à faire
+3.  **Contexte :** Projet de Fin de Formation
+4.  **Analyse Technique**
+5.  **Analyse Fonctionnelle**
+6.  **Conception**
+7.  **Versions (v1 - v8)**
+
+---
+
 <!-- Waterfall -->
 # Waterfall
 ![w:600 Use Case Diagram](imgs/Waterfall.png)
@@ -35,7 +47,7 @@ style: |
 ---
 
 <!-- Exigences -->
-## Exigences: Travail à faire
+# Exigences: Travail à faire
 
 ### Développement d'une application de gestion de liste de lecture
 *   **Partie Publique:** Interface permettant aux visiteurs de consulter les livres. Fonctionnalités : Recherche par titre, auteur, filtre par catégorie, pagination - (6 éléments/page) .
@@ -53,13 +65,13 @@ style: |
 
 
 <!-- Stack Technique -->
-# Stack Technique
+# Analyse Technique
 
 <div style="display: flex; gap: 30px;">
 
 <div style="width: 45%; padding: 20px; border-radius: 8px;">
 
-### Les technologies à utiliser
+## Les technologies à utiliser
 
 1.  **Base de données:** MySQL.
 2.  **Framework:** Laravel 12.
@@ -99,7 +111,7 @@ style: |
 
 ---
 
-## Versions
+# Versions
 
 | Version | Description | Branche |
 | :--- | :--- | :--- |
