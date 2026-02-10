@@ -27,14 +27,14 @@
             background-color: #f9fafb !important;
             border-color: #d1d5db !important;
         }
-        
+
         .dark #pagination-container nav div:last-child span.relative,
         .dark #pagination-container nav div:last-child a.relative {
             background-color: #1e293b !important;
             border-color: #334155 !important;
             color: #94a3b8 !important;
         }
-        
+
         .dark #pagination-container nav div:last-child span.relative[aria-current="page"] {
             background-color: #3b82f6 !important;
             color: white !important;
@@ -49,7 +49,8 @@
         <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between mb-6">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Gestion des Livres</h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Gérez votre inventaire : ajoutez, modifiez ou supprimez vos articles.</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Gérez votre inventaire : ajoutez, modifiez ou supprimez
+                    vos articles.</p>
             </div>
             <div>
                 <button type="button" onclick="openAddModal()"
@@ -100,7 +101,7 @@
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
                             ISBN</th>
-                        
+
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
                             CATEGORIES</th>
@@ -128,56 +129,56 @@
     </div>
 
     <script>
-        (function() {
+        (function () {
             // Helper: Show standard toast/alert
-            window.showAlert = function(message, type = 'success') {
+            window.showAlert = function (message, type = 'success') {
                 const container = document.getElementById('alert-container');
                 if (!container) return;
-                
+
                 const bgColor = type === 'success' ? 'bg-green-600' : 'bg-red-600';
                 container.innerHTML = `
-                    <div class="p-4 ${bgColor} text-white rounded-lg shadow-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${type === 'success' ? 'M5 13l4 4L19 7' : 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'}"></path></svg>
-                        <span>${message}</span>
-                    </div>
-                `;
-                
+                        <div class="p-4 ${bgColor} text-white rounded-lg shadow-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${type === 'success' ? 'M5 13l4 4L19 7' : 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'}"></path></svg>
+                            <span>${message}</span>
+                        </div>
+                    `;
+
                 if (type === 'success') {
                     setTimeout(() => { container.innerHTML = ''; }, 5000);
                 }
             };
 
             // Global Error Handling
-            window.onerror = function(msg, url, line) {
+            window.onerror = function (msg, url, line) {
                 console.error('JS Error:', msg, 'at', url, ':', line);
                 return false;
             };
 
             // Manual Modal Open
-            window.openAddModal = function() {
+            window.openAddModal = function () {
                 const form = document.getElementById('bookForm');
                 if (!form) return;
-                
+
                 form.reset();
                 form.action = "{{ route('admin.books.store') }}";
                 const methodField = document.getElementById('method-field');
                 if (methodField) methodField.remove();
-                
+
                 document.getElementById('modal-title').textContent = 'Add New Book';
                 document.querySelectorAll('input[name="categories[]"]').forEach(cb => cb.checked = false);
                 document.getElementById('current-image-preview')?.classList.add('hidden');
-                
+
                 const modal = document.getElementById('hs-add-book-modal');
                 modal.classList.remove('hidden', 'pointer-events-none');
                 modal.classList.add('flex', 'pointer-events-auto');
-                
+
                 if (window.HSOverlay) {
                     window.HSOverlay.open(modal);
                 }
             };
 
             // Manual Modal Close
-            window.closeBookModal = function() {
+            window.closeBookModal = function () {
                 if (window.HSOverlay && typeof window.HSOverlay.close === 'function') {
                     window.HSOverlay.close(document.getElementById('hs-add-book-modal'));
                 } else {
@@ -188,10 +189,10 @@
             }
 
             // Manual Save Function
-            window.saveBook = function() {
+            window.saveBook = function () {
                 const saveBtn = document.getElementById('save-book-btn');
                 const form = document.getElementById('bookForm');
-                
+
                 if (!form.checkValidity()) {
                     form.reportValidity();
                     return;
@@ -212,27 +213,95 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     }
                 })
-                .then(async r => {
-                    const contentType = r.headers.get('content-type');
-                    if (contentType && contentType.includes('application/json')) {
-                        const data = await r.json();
-                        if (!r.ok) throw new Error(data.message || `Error ${r.status}`);
-                        return data;
-                    } else {
-                        throw new Error('Server returned non-JSON response.');
-                    }
+                    .then(async r => {
+                        const contentType = r.headers.get('content-type');
+                        if (contentType && contentType.includes('application/json')) {
+                            const data = await r.json();
+                            if (!r.ok) throw new Error(data.message || `Error ${r.status}`);
+                            return data;
+                        } else {
+                            throw new Error('Server returned non-JSON response.');
+                        }
+                    })
+                    .then(data => {
+                        showAlert(data.message || 'Book saved!');
+                        window.closeBookModal();
+                        setTimeout(() => location.reload(), 1000);
+                    })
+                    .catch(err => {
+                        console.error('Save error:', err);
+                        showAlert(err.message, 'error');
+                        saveBtn.disabled = false;
+                        saveBtn.innerHTML = originalText;
+                    });
+            };
+
+            // Manual Edit Modal Open
+            window.openEditModal = function (id) {
+                const form = document.getElementById('bookForm');
+                if (!form) return;
+
+                // Reset form
+                form.reset();
+                document.querySelectorAll('input[name="categories[]"]').forEach(cb => cb.checked = false);
+                document.getElementById('current-image-preview')?.classList.add('hidden');
+
+                // Set Action
+                form.action = `/admin/books/${id}`;
+
+                // Add hidden PUT method
+                let methodField = document.getElementById('method-field');
+                if (!methodField) {
+                    methodField = document.createElement('input');
+                    methodField.type = 'hidden';
+                    methodField.name = '_method';
+                    methodField.id = 'method-field';
+                    methodField.value = 'PUT';
+                    form.appendChild(methodField);
+                }
+
+                // Fetch Data
+                fetch(`/admin/books/${id}`, {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
                 })
-                .then(data => {
-                    showAlert(data.message || 'Book saved!');
-                    window.closeBookModal();
-                    setTimeout(() => location.reload(), 1000);
-                })
-                .catch(err => {
-                    console.error('Save error:', err);
-                    showAlert(err.message, 'error');
-                    saveBtn.disabled = false;
-                    saveBtn.innerHTML = originalText;
-                });
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success && data.book) {
+                            const book = data.book;
+
+                            document.getElementById('title').value = book.title;
+                            document.getElementById('author').value = book.author;
+                            document.getElementById('ISBN').value = book.ISBN || '';
+                            document.getElementById('description').value = book.description || '';
+
+                            // Handle Image
+                            const imgPreview = document.getElementById('edit-image-preview');
+                            const imgContainer = document.getElementById('current-image-preview');
+                            if (book.image && imgPreview && imgContainer) {
+                                imgPreview.src = book.image; // Assuming processed URL or relative path
+                                imgContainer.classList.remove('hidden');
+                            }
+
+                            // Handle Categories
+                            if (book.categories && Array.isArray(book.categories)) {
+                                book.categories.forEach(cat => {
+                                    const checkbox = document.querySelector(`input[name="categories[]"][value="${cat.id}"]`);
+                                    if (checkbox) checkbox.checked = true;
+                                });
+                            }
+
+                            document.getElementById('modal-title').textContent = 'Edit Book';
+
+                            const modal = document.getElementById('hs-add-book-modal');
+                            modal.classList.remove('hidden', 'pointer-events-none');
+                            modal.classList.add('flex', 'pointer-events-auto');
+
+                            if (window.HSOverlay) {
+                                window.HSOverlay.open(modal);
+                            }
+                        }
+                    })
+                    .catch(err => console.error('Error loading book:', err));
             };
 
             // Explicit Event Listeners
@@ -246,21 +315,21 @@
                 const searchInput = document.getElementById('search');
                 const categoryFilter = document.getElementById('category-filter');
                 const tableBody = document.getElementById('books-table-body');
-                
+
                 function updateTable() {
                     const url = new URL(location.href);
                     url.searchParams.set('search', searchInput?.value || '');
                     url.searchParams.set('category', categoryFilter?.value || '');
                     url.searchParams.set('page', 1);
-                    
+
                     history.pushState({}, '', url);
 
                     fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-                    .then(r => r.text())
-                    .then(html => {
-                        if (tableBody) tableBody.innerHTML = html;
-                        if (window.lucide) window.lucide.createIcons();
-                    });
+                        .then(r => r.text())
+                        .then(html => {
+                            if (tableBody) tableBody.innerHTML = html;
+                            if (window.lucide) window.lucide.createIcons();
+                        });
                 }
 
                 searchInput?.addEventListener('input', () => {
