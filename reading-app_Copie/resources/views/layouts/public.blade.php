@@ -26,10 +26,8 @@
                         <div class="shrink-0 flex items-center">
                             <a class="flex items-center gap-x-2 text-xl font-bold dark:text-white" href="{{ route('home') }}"
                                 aria-label="Brand">
-                                <div class="flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-md">
-                                    <i data-lucide="activity" class="w-5 h-5"></i>
-                                </div>
-                                <span>Reading<span class="text-blue-600">List</span></span>
+                                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-8 h-8 rounded-md">
+                                <span>Book<span class="text-blue-600">Hub</span></span>
                             </a>
                         </div>
                         <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">

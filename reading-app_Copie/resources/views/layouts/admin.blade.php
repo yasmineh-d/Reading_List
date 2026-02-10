@@ -19,10 +19,8 @@
         <div class="px-6">
             <a class="flex items-center gap-x-2 text-xl font-bold dark:text-white" href="{{ url('/') }}"
                 aria-label="Brand">
-                <div class="flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-md">
-                    <i data-lucide="activity" class="w-5 h-5"></i>
-                </div>
-                <span>Reading<span class="text-blue-600">List</span></span>
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-8 h-8 rounded-md">
+                <span>Book<span class="text-blue-600">Hub</span></span>
             </a>
         </div>
 
@@ -65,10 +63,8 @@
         <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6 md:px-8" aria-label="Global">
             <div class="mr-5 lg:mr-0 lg:hidden">
                 <a class="flex items-center gap-x-2 text-xl font-semibold dark:text-white" href="#" aria-label="Brand">
-                    <span class="flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-md">
-                        <i data-lucide="activity" class="w-5 h-5"></i>
-                    </span>
-                    <span>Reading<span class="text-blue-600">List</span></span>
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-8 h-8 rounded-md">
+                    <span>Book<span class="text-blue-600">Hub</span></span>
                 </a>
             </div>
 
@@ -83,7 +79,7 @@
                             <!-- Placeholder Avatar -->
                             <div
                                 class="w-[2.375rem] h-[2.375rem] rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
-                                
+
                             </div>
                         </button>
                         <div class="absolute right-0 top-full mt-2 z-50 transition-[opacity,margin] duration opacity-0 hidden min-w-[15rem] bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700"
