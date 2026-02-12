@@ -78,22 +78,27 @@
                             class="hs-dropdown-toggle inline-flex justify-center items-center gap-2 w-[2.375rem] h-[2.375rem] rounded-full border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-xs dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-slate-800 dark:focus:ring-slate-700 dark:focus:ring-offset-gray-800">
                             <!-- Placeholder Avatar -->
                             <div
-                                class="w-[2.375rem] h-[2.375rem] rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
-
+                                class="w-[2.375rem] h-[2.375rem] rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold uppercase">
+                                {{ substr(Auth::user()->username, 0, 1) }}
                             </div>
                         </button>
-                        <div class="absolute right-0 top-full mt-2 z-50 transition-[opacity,margin] duration opacity-0 hidden min-w-[15rem] bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700"
+                        <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-[15rem] bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700"
                             aria-labelledby="hs-dropdown-with-header">
                             <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg dark:bg-gray-700">
                                 <p class="text-sm text-gray-500 dark:text-gray-400">Connecté en tant que</p>
-                                <p class="text-sm font-medium text-gray-800 dark:text-gray-300">Admin</p>
+                                <p class="text-sm font-medium text-gray-800 dark:text-gray-300">
+                                    {{ Auth::user()->username }}
+                                </p>
                             </div>
                             <div class="mt-2 py-2 first:pt-0 last:pb-0">
-                                <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-400"
-                                    href="#">
-                                    <i data-lucide="log-out" class="w-4 h-4"></i>
-                                    Se déconnecter
-                                </a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-400">
+                                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                                        Se déconnecter
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>

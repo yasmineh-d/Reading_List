@@ -48,7 +48,7 @@
                                 @foreach($book->categories as $category)
                                     <a href="{{ route('books.index', ['category' => $category->id]) }}"
                                         class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#efefec] dark:bg-[#2C2C2A] text-[#1b1b18] dark:text-[#EDEDEC] hover:bg-[#e3e3e0] dark:hover:bg-[#3E3E3A] transition-colors">
-                                        {{ $category->label }}
+                                        {{ $category->name }}
                                     </a>
                                 @endforeach
                             </div>
@@ -70,7 +70,8 @@
                                 <div>
                                     <dt class="text-sm font-medium text-[#706f6c] dark:text-[#A1A09A]">Published</dt>
                                     <dd class="mt-1 text-sm text-[#1b1b18] dark:text-[#EDEDEC]">
-                                        {{ \Carbon\Carbon::parse($book->publication_date)->format('F j, Y') }}</dd>
+                                        {{ \Carbon\Carbon::parse($book->publication_date)->format('F j, Y') }}
+                                    </dd>
                                 </div>
                             @endif
 

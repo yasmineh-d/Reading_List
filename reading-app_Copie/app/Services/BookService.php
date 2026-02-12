@@ -7,10 +7,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class BookService
 {
-    public function getAll(?string $search = null, ?int $category = null): LengthAwarePaginator
+    public function getAll(?string $search = null, ?int $category = null, string $sortDirection = 'desc', int $perPage = 10): LengthAwarePaginator
     {
         $query = Book::with(['categories', 'user'])
-            ->orderBy('created_at', 'desc'); // Newest books first
+            ->orderBy('created_at', $sortDirection);
 
         if ($search) {
             $query->where('title', 'like', "%{$search}%");
@@ -22,7 +22,7 @@ class BookService
             });
         }
 
-        return $query->paginate(20);
+        return $query->paginate($perPage);
     }
 
     public function getById(int $id): Book

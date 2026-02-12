@@ -21,9 +21,15 @@ class PublicBookController extends Controller
     {
         $books = $this->bookService->getAll(
             $request->input('search'),
-            $request->input('category')
+            $request->input('category'),
+            'desc',
+            3
         );
         $categories = $this->categoryService->getAll();
+
+        if ($request->ajax()) {
+            return view('public.books._list', compact('books'))->render();
+        }
 
         return view('public.books.index', compact('books', 'categories'));
     }

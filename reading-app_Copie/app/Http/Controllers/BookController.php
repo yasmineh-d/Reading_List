@@ -23,7 +23,8 @@ class BookController extends Controller
     {
         $books = $this->bookService->getAll(
             $request->input('search'),
-            $request->input('category')
+            $request->input('category'),
+            'asc'
         );
         $categories = $this->categoryService->getAll();
 
@@ -89,7 +90,7 @@ class BookController extends Controller
         if (request()->ajax()) {
             // Make sure categories are loaded
             $book->load('categories');
-            
+
             return response()->json([
                 'success' => true,
                 'book' => $book
