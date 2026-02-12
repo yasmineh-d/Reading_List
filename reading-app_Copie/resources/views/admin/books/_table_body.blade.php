@@ -3,32 +3,32 @@
         <!-- Image Column -->
         <td class="px-6 py-4 whitespace-nowrap">
             @if($book->image)
-                <img class="w-12 h-12 object-cover rounded" 
-                     src="{{ Str::startsWith($book->image, ['http', 'https', '/']) ? $book->image : asset('storage/' . $book->image) }}" 
-                     alt="{{ $book->title }}"
-                     onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'flex items-center justify-center w-12 h-12 bg-gray-100 rounded text-gray-400 dark:bg-slate-800\'><i data-lucide=\'image\' class=\'w-5 h-5\'></i></div>'; lucide.createIcons();">
+                <img class="w-12 h-12 object-cover rounded"
+                    src="{{ Str::startsWith($book->image, ['http', 'https', '/']) ? $book->image : asset('storage/' . $book->image) }}"
+                    alt="{{ $book->title }}"
+                    onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'flex items-center justify-center w-12 h-12 bg-gray-100 rounded text-gray-400 dark:bg-slate-800\'><i data-lucide=\'image\' class=\'w-5 h-5\'></i></div>'; lucide.createIcons();">
             @else
                 <div class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded text-gray-400 dark:bg-slate-800">
                     <i data-lucide="image" class="w-5 h-5"></i>
                 </div>
             @endif
         </td>
-        
+
         <!-- Title Column -->
         <td class="px-6 py-4">
             <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $book->title }}</div>
         </td>
-        
+
         <!-- Author Column -->
         <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-600 dark:text-gray-400">{{ $book->author }}</div>
         </td>
-        
+
         <!-- ISBN Column -->
         <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-900 dark:text-white">{{ $book->ISBN ?? 'N/A' }}</div>
         </td>
-        
+
         <!-- Catégorie Column -->
         <td class="px-6 py-4 whitespace-nowrap">
             <div class="flex flex-wrap gap-1">
@@ -40,18 +40,18 @@
                 @endforeach
             </div>
         </td>
-        
+
         <!-- Description Column -->
         <td class="px-6 py-4">
             <div class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 max-h-11 overflow-hidden">
                 {{ Str::limit($book->description ?? 'Découvrez ' . $book->title . ', un smartphone phare...', 80) }}
             </div>
         </td>
-        
+
         <!-- Actions Column -->
         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <div class="flex items-center justify-end gap-2">
-                <button onclick="openEditModal({{ $book->id }})" data-hs-overlay="#hs-add-book-modal"
+                <button @click="openEditModal({{ $book->id }})" data-hs-overlay="#hs-add-book-modal"
                     class="p-1.5 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors dark:text-blue-400 dark:hover:bg-blue-900/30"
                     title="Edit">
                     <i data-lucide="edit-2" class="w-4 h-4"></i>

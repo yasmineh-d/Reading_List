@@ -5,7 +5,7 @@
         <div
             class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl pointer-events-auto dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
             <div class="flex justify-between items-center py-3 px-4 border-b border-gray-200 dark:border-gray-700">
-                <h3 id="modal-title" class="font-bold text-gray-800 dark:text-white">
+                <h3 id="modal-title" class="font-bold text-gray-800 dark:text-white" x-text="modalTitle">
                     Add New Book
                 </h3>
                 <button type="button"
@@ -29,9 +29,19 @@
                     data-hs-overlay="#hs-add-book-modal">
                     Cancel
                 </button>
-                <button type="button" id="save-book-btn" 
+                <button type="button" @click="saveBook()" :disabled="isSaving"
                     class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none shadow-sm transition-all">
-                    Sauvegarder
+                    <span x-show="!isSaving">Sauvegarder</span>
+                    <span x-show="isSaving" class="flex items-center gap-2">
+                        <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        Saving...
+                    </span>
                 </button>
             </div>
         </div>
