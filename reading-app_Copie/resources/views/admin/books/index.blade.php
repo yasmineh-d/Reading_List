@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.public')
 
 @section('content')
     <style>
@@ -137,11 +137,11 @@
 
                 const bgColor = type === 'success' ? 'bg-green-600' : 'bg-red-600';
                 container.innerHTML = `
-                        <div class="p-4 ${bgColor} text-white rounded-lg shadow-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${type === 'success' ? 'M5 13l4 4L19 7' : 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'}"></path></svg>
-                            <span>${message}</span>
-                        </div>
-                    `;
+                            <div class="p-4 ${bgColor} text-white rounded-lg shadow-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${type === 'success' ? 'M5 13l4 4L19 7' : 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'}"></path></svg>
+                                <span>${message}</span>
+                            </div>
+                        `;
 
                 if (type === 'success') {
                     setTimeout(() => { container.innerHTML = ''; }, 5000);
