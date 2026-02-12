@@ -109,9 +109,6 @@ style: |
 # Conception
 ![w:600 Use Case Diagram](imgs/diagram_class.png)
 
----
-# Conclusion
-![w:600 Use Case Diagram](imgs/diagram_class.png)
 
 ---
 
