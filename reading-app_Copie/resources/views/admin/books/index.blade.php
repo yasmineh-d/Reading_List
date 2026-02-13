@@ -43,7 +43,7 @@
 
     <div x-data="bookManager({ search: '{{ request('search') }}', category: '{{ request('category') }}' })"
         class="space-y-6">
-        <!-- Alert Container -->
+        <!-- Alert Container message-->
         <div id="alert-container" class="fixed top-4 right-4 z-[9999] w-80">
             <template x-if="alert.show">
                 <div :class="alert.type === 'success' ? 'bg-green-600' : 'bg-red-600'"

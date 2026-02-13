@@ -51,11 +51,13 @@
         <!-- Actions Column -->
         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <div class="flex items-center justify-end gap-2">
+                <!--Edit -->
                 <button @click="openEditModal({{ $book->id }})" data-hs-overlay="#hs-add-book-modal"
                     class="p-1.5 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors dark:text-blue-400 dark:hover:bg-blue-900/30"
                     title="Edit">
                     <i data-lucide="edit-2" class="w-4 h-4"></i>
                 </button>
+                <!--Delete -->
                 <button onclick="deleteBook({{ $book->id }})"
                     class="p-1.5 text-red-600 hover:text-red-700 hover:bg-red-50 rounded transition-colors dark:text-red-400 dark:hover:bg-red-900/30"
                     title="Delete">
@@ -63,7 +65,7 @@
                 </button>
             </div>
         </td>
-    </tr>
+    </tr>    
 @empty
     <tr>
         <td colspan="7" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400">

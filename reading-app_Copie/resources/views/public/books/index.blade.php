@@ -1,8 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-    <div x-data="publicBookManager({ search: '{{ request('search') }}', category: '{{ request('category') }}' })"
-        class="space-y-8">
+    <div x-data="publicBookManager()" x-init="init()" class="space-y-8">
         <!-- Header & Search -->
         <div class="text-center max-w-2xl mx-auto pt-8">
             <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Library</h1>
@@ -43,4 +42,57 @@
             </div>
         </div>
 
+        <script>
+            function publicBookManager() {
+                return {
+                    search: '{{ request('search') }}',
+                    category: '{{ request('category') }}',
+                    booksHtml: '',
+
+                    init() {
+                        this.booksHtml = document.getElementById('books-container').innerHTML;
+
+                        // Handle pagination clicks within the component container
+                        document.addEventListener('click', (e) => {
+                            const link = e.target.closest('#pagination-container a') || e.target.closest('.pagination a');
+                            if (link && document.getElementById('books-container').contains(link)) {
+                                e.preventDefault();
+                                this.fetchPage(link.href);
+                            }
+                        });
+                    },
+
+                    fetchBooks() {
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('search', this.search);
+                        url.searchParams.set('category', this.category);
+                        url.searchParams.delete('page');
+
+                        history.pushState(null, '', url.toString());
+
+                        this.loadContent(url.toString());
+                    },
+
+                    fetchPage(url) {
+                        history.pushState(null, '', url);
+                        this.loadContent(url);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    },
+
+                    loadContent(url) {
+                        fetch(url, {
+                            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                        })
+                            .then(response => response.text())
+                            .then(html => {
+                                this.booksHtml = html;
+                                this.$nextTick(() => {
+                                    if (window.lucide) window.lucide.createIcons();
+                                });
+                            })
+                            .catch(error => console.error('Error fetching books:', error));
+                    }
+                };
+            }
+        </script>
 @endsection
