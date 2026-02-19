@@ -1,37 +1,59 @@
 <?php
 
-namespace App\Models;
+namespace Database\Seeders;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\User;
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
-class User extends Authenticatable
+class RolesAndPermissionsSeeder extends Seeder
 {
-    use HasFactory;
-
-    protected $fillable = [
-        'username',
-        'email',
-        'password',
-        'role',
-    ];
-
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
+     * Run the database seeds.
      */
-    protected $casts = [
-        'password' => 'hashed',
-    ];
-
-    public function isAdmin()
+    public function run(): void
     {
-        return $this->role === 'admin';
-    }
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
 
-    public function books()
-    {
-        return $this->hasMany(Book::class);
+        $permissions = [
+            'book.view',
+            'book.create',
+            'book.edit',
+            'book.delete',
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::findOrCreate($permission);
+        }
+
+        $adminRole = Role::findOrCreate('admin');
+        $editorRole = Role::findOrCreate('editor');
+
+        $adminPermissions = Permission::query()
+            ->whereIn('name', $permissions)
+            ->get();
+
+        $editorPermissions = Permission::query()
+            ->whereIn('name', [
+                'book.view',
+                'book.create',
+                'book.edit',
+            ])
+            ->get();
+
+        $adminRole->syncPermissions($adminPermissions);
+        $editorRole->syncPermissions($editorPermissions);
+
+        $admin = User::where('email', 'admin@books.com')->first();
+        if ($admin) {
+            $admin->syncRoles(['admin']);
+        }
+
+        $editor = User::where('email', 'editor@books.com')->first();
+        if ($editor) {
+            $editor->syncRoles(['editor']);
+        }
     }
 }
